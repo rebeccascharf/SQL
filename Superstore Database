@@ -50,3 +50,81 @@ ORDER BY price DESC;
 SELECT stock_quantity
 FROM superstore
 WHERE item_name='Air Purifier'
+
+#Which item has the highest rating, and what is its category?
+
+SELECT item_name, MAX(average_rating), category
+FROM superstore;
+
+#What is the total stock quantity for each category, ordered from highest to lowest?
+
+SELECT category, SUM(stock_quantity) AS total_stock
+FROM superstore
+GROUP BY category
+ORDER BY total_stock DESC;
+
+#List all items that cost more than $100, ordered by price (highest → lowest).
+
+SELECT item_id, item_name, category, price
+FROM superstore
+WHERE price > 100
+ORDER BY price DESC;
+
+#What is the average rating for items that cost less than $50?
+
+SELECT AVG(average_rating) AS avg_rating_under_50
+FROM superstore
+WHERE price < 50;
+
+#Show the item(s) with the lowest stock quantity in the entire store.
+
+SELECT item_id, item_name, MIN(stock_quantity)
+FROM superstore;
+
+#How many items in the store have a rating of 4.5 or higher?
+
+SELECT COUNT(*) AS items_rating_4_5_plus
+FROM superstore
+WHERE average_rating >= 4.5;
+
+#What is the sum of stock quantities for the “Electronics” category?
+
+SELECT SUM(stock_quantity) AS electronics_total_stock
+FROM superstore
+WHERE category = 'Electronics';
+
+#Find the maximum price in each category.
+
+SELECT category, MAX(price) AS max_price
+FROM superstore
+GROUP BY category
+ORDER BY price DESC;
+
+#What is the average price of items in the ‘Appliances’ category?
+
+SELECT AVG(price) AS appliances_avg_price
+FROM superstore
+WHERE category = 'Appliances';
+
+#List all items in the “Furnishings” category, ordered by rating (highest → lowest).
+
+SELECT item_id, item_name, price, average_rating
+FROM superstore
+WHERE category = 'Furnishings'
+ORDER BY average_rating DESC;
+
+#What is the total potential stock value (price × stock_quantity) of all items in the store?
+
+SELECT SUM(price * stock_quantity) AS total_inventory_value
+FROM superstore;
+
+#Show the minimum, maximum, and average rating for each category.
+
+SELECT
+  category,
+  MIN(average_rating) AS min_rating,
+  MAX(average_rating) AS max_rating,
+  AVG(average_rating) AS avg_rating
+FROM superstore
+GROUP BY category
+ORDER BY category;
