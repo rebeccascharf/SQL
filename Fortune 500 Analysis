@@ -58,36 +58,109 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-# Analysis: 
+#Analysis: 
 
-# Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "abysmal" based on the maternity leave offered. 
-SELECT
-company_name,
+#Assign all the companies in the Healthcare industry as "mother friendly workplace", "acceptable", or "abysmal" based on the maternity leave offered. 
+SELECT company_name,
 CASE 
   WHEN maternity_leave_weeks >= 10 THEN 'mother friendly workplace'
   WHEN maternity_leave_weeks >= 8 THEN 'acceptable'
   ELSE 'abysmal'
 END as mother_friendliness
 FROM fortune_companies
-WHERE industry='Healthcare'
-;
+WHERE industry='Healthcare';
 
-# Which industries have an average revenue of at least $200 Billion, and what are their avg revenues?
+#Which industries have an average revenue of at least $200 Billion, and what are their avg revenues?
 SELECT industry, ROUND(AVG(revenue),1) as avg_revenue_billions
 FROM fortune_companies
 GROUP BY industry
-HAVING avg_revenue_billions>=200
-;
+HAVING avg_revenue_billions>=200;
 
-# Which companies have healthcare benefits *and* at least 20 paid time off days?
+#Which companies have healthcare benefits *and* at least 20 paid time off days?
 SELECT company_name
 FROM fortune_companies
 WHERE paid_time_off_days>20
-AND healthcare_benefits=1
-;
+AND healthcare_benefits=1;
 
-# Which company in the Retail industry has the least revenue, and what's their revenue? 
+#Which company in the Retail industry has the least revenue, and what's their revenue? 
 SELECT company_name, min(revenue)
 FROM fortune_companies
-WHERE industry = 'Retail'
-;
+WHERE industry = 'Retail';
+
+#List Technology companies by revenue (high → low)
+SELECT company_name, revenue
+FROM fortune_companies
+WHERE industry = 'Technology'
+ORDER BY revenue DESC;
+
+#How many companies are in the table?
+SELECT COUNT(*) AS company_count
+FROM fortune_companies;
+
+#How many companies per industry (most → fewest)?
+SELECT industry, COUNT(*) AS company_count
+FROM fortune_companies
+GROUP BY industry
+ORDER BY company_count DESC;
+
+#What’s the total number of employees across all companies?
+SELECT SUM(employees) AS total_employees
+FROM fortune_companies;
+
+#Which industries employ at least 100,000 people in total?
+SELECT industry, SUM(employees) AS total_employees
+FROM fortune_companies
+GROUP BY industry
+HAVING SUM(employees) >= 100000
+ORDER BY total_employees DESC;
+
+#Average PTO days by industry (1 decimal), high → low
+SELECT industry, ROUND(AVG(paid_time_off_days), 1) AS avg_pto_days
+FROM fortune_companies
+GROUP BY industry
+ORDER BY avg_pto_days DESC;
+
+#Min, max, and spread of revenue (billions) by industry
+SELECT industry,
+  ROUND(MIN(revenue), 2) AS min_rev_b,
+  ROUND(MAX(revenue), 2) AS max_rev_b,
+  ROUND(MAX(revenue) - MIN(revenue), 2) AS spread_b
+FROM fortune_companies
+GROUP BY industry
+ORDER BY spread_b DESC;
+
+#% of companies with healthcare benefits by industry
+SELECT industry, ROUND(AVG(healthcare_benefits) * 100, 1) AS pct_with_benefits
+FROM fortune_companies
+GROUP BY industry
+ORDER BY pct_with_benefits DESC, industry;
+
+#Top 5 companies by revenue per employee (millions per employee) (Revenue is in billions → multiply by 1000 to get millions.)
+SELECT company_name, ROUND(revenue * 1000.0 / employees, 3) AS rev_per_emp_millions
+FROM fortune_companies
+ORDER BY rev_per_emp_millions DESC
+LIMIT 5;
+
+#Companies that offer ≥ 14 weeks maternity leave and healthcare benefits
+SELECT company_name, maternity_leave_weeks
+FROM fortune_companies
+WHERE maternity_leave_weeks>=14
+AND healthcare_benefits=1
+ORDER BY maternity_leave_weeks DESC, company_name;
+
+#Company (or companies) with the highest average employee tenure
+SELECT company_name, avg_employee_tenure
+FROM fortune_companies
+WHERE avg_employee_tenure = (SELECT MAX(avg_employee_tenure) FROM fortune_companies)
+ORDER BY company_name;
+
+SELECT company_name, avg_employee_tenure
+FROM fortune_companies
+ORDER BY avg_employee_tenure DESC, company_name
+LIMIT 2; 
+
+#Weighted average tenure by industry (weighted by employee count)
+SELECT industry, ROUND(SUM(avg_employee_tenure * employees) * 1.0 / SUM(employees), 2) AS weighted_avg_tenure
+FROM fortune_companies
+GROUP BY industry
+ORDER BY weighted_avg_tenure DESC;
