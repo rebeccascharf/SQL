@@ -1,4 +1,105 @@
+#Fortune 500 Workplace & Revenue Analysis
 
+In this project, I used SQL to analyze a sample dataset of Fortune 500 companies across various industries. The analysis explored company revenue, employee counts, benefits, and time-off policies to assess workplace quality and identify high-performing sectors.
+
+---
+
+#Objective
+
+The primary goals of this analysis were to:
+
+- Classify industries based on revenue and workplace policies
+- Identify companies with both generous PTO and healthcare coverage
+- Highlight sectors with the highest average revenue
+- Assess how maternity leave policies impact workplace friendliness
+
+---
+
+#Business Questions
+
+- Which industries average over $200B in revenue?
+- Which companies offer both healthcare and 20+ PTO days?
+- How do maternity leave policies vary by industry?
+- Can we rank healthcare companies by workplace-friendliness?
+- What is the relationship between employee tenure and benefits?
+
+---
+
+#Dataset Overview
+
+- **Records**: 40+ companies  
+- **Fields Included**:
+  - `company_name`
+  - `industry`
+  - `revenue`
+  - `employees`
+  - `healthcare_benefits` (0 = No, 1 = Yes)
+  - `paid_time_off_days`
+  - `maternity_leave_weeks`
+  - `avg_employee_tenure`
+- **Note**: This is a mock dataset created for training and project demonstration purposes.
+
+---
+
+#Tools & Skills Used
+
+- **SQL**: SELECT, GROUP BY, HAVING, CASE, COUNT, SUM, AVG
+- **Business Benchmarking**
+- **Workforce Analytics**
+- **GitHub**: Version control and project documentation
+- **Data Storytelling**: Translating query results into business impact
+
+---
+
+#Methodology
+
+- Used `GROUP BY` and `HAVING` to compare industry revenue averages
+- Applied `CASE` logic to classify workplace friendliness based on PTO and benefits
+- Filtered companies offering both healthcare and high PTO
+- Created custom workplace scores for healthcare companies
+- Explored correlation between maternity leave and industry type
+
+---
+
+#Key Insights
+
+- **Industries with $200B+ average revenue**: Technology, Financial Services, and Energy
+- **Top workplace-friendly companies** offered both healthcare and 20+ PTO days
+- Companies with **longer maternity leave** often correlated with higher employee retention
+- **Healthcare companies** varied widely in benefits—some exceeded expectations, others lacked basic offerings
+- Average employee tenure was higher in companies with both strong benefits and generous time-off policies
+
+---
+
+#Recommendations
+
+- **Benchmark** company benefits against top performers in the same industry
+- **Enhance maternity leave** policies to attract and retain top talent
+- Use **workplace-friendliness scores** to guide HR investments and employee satisfaction strategy
+- Encourage companies below industry benchmarks to reassess their PTO policies
+
+---
+
+#Next Steps
+
+- Add gender, age, and role-level breakdowns for more detailed analysis
+- Integrate time-based changes in benefits to track workplace evolution
+- Visualize top workplace performers using Tableau or Power BI dashboards
+
+---
+
+#Skills Demonstrated
+
+- SQL Querying: SELECT, GROUP BY, HAVING, CASE, COUNT, SUM
+- Business Analysis & Interpretation
+- Benchmarking & Industry Insights
+- Communicating Data Insights Effectively
+
+---
+
+#Note: This project uses a fictional dataset for educational and portfolio-building purposes.
+
+---
 
 CREATE TABLE fortune_companies (
     company_id INTEGER PRIMARY KEY,
