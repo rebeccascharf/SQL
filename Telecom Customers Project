@@ -1,0 +1,37 @@
+CREATE TABLE products (
+    product_id INTEGER PRIMARY KEY,
+    product_name TEXT,
+    product_type TEXT,
+    speed_mbps INTEGER,
+    data_limit_gb INTEGER,
+    monthly_price DECIMAL(8, 2)
+);
+
+CREATE TABLE customer_subscriptions (
+    customer_id INTEGER PRIMARY KEY,
+    product_id INTEGER,
+    price DECIMAL(8, 2),
+    email TEXT,
+    FOREIGN KEY (product_id) REFERENCES products (product_id)
+);
+
+INSERT INTO products (product_id, product_name, product_type, speed_mbps, data_limit_gb, monthly_price)
+VALUES
+    (1, 'Internet', 'Internet', 50, 250, 39.99),
+    (2, 'High-Speed Internet', 'Internet', 100, 500, 49.99),
+    (3, 'Fiber Optic Internet', 'Internet', 500, 1000, 79.99),
+    (4, 'Data Plan', 'Cell Phone Service', NULL, 10, 20.00),
+	(5, 'Family Plan', 'Cell Phone Service', NULL, NULL, 25.00),
+    (6, 'Unlimited Data Plan', 'Cell Phone Service', NULL, NULL, 35.00),
+    (7, 'Starter TV Package', 'TV Package', NULL, NULL, 59.99),
+    (8, 'Premium TV Package', 'TV Package', NULL, NULL, 79.99);
+
+
+INSERT INTO customer_subscriptions (customer_id, product_id, price, email)
+VALUES
+    (12097, 2, 49.99, 'jahnvi.d@example.com'),
+    (12098, 6, 35.00, 'b.krikorian@example.com'),
+    (12099, 3, 79.99, 'anita.davis@example.com'),
+    (12100, 8, 79.99, 'l.j.metzger@example.com'),
+    (12101, 5, 25.00, 'e.okafor@example.com'),
+    (12102, 2, 49.99, 'susan.wilson@example.com');
