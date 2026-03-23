@@ -1,6 +1,6 @@
 # Telecom Customer & Product Analysis
 
-In this project, I used SQL to analyze a telecommunications database containing customer subscription and product data. This project simulates real-world data analysis tasks performed at companies like AT&T, Comcast, and Verizon.
+This project demonstrates SQL-based analysis of a telecom dataset using subqueries to answer real-world business questions around customer behavior, pricing, and product performance.
 
 The analysis focuses on identifying customer behaviors, product segmentation, and pricing insights using subqueries.
 
@@ -14,15 +14,17 @@ The primary goals of this analysis were to:
 - Analyze customer-product relationships using subqueries  
 - Compare customer pricing against product benchmarks  
 - Strengthen SQL skills in nested queries and filtering logic  
+- Identifying high-value and premium customers
 
 ---
 
 ## Business Questions
 
-- Which customers are subscribed to **Cell Phone Service** products?  
-- Which customers use **Internet** services?  
-- Which customers are paying **above-average prices** for internet services?  
-- How can subqueries be used to filter customer data efficiently?  
+- Which customers are subscribed to Internet, Cell Phone, and TV services?  
+- Which customers are paying above-average prices?  
+- Which products are considered premium within their category?  
+- Which products have no active subscribers?  
+- How can subqueries be used to analyze customer-product relationships?  
 
 ---
 
@@ -102,11 +104,20 @@ This project uses a telecom database with two tables:
 
 ## Skills Demonstrated
 
-- SQL Subqueries & Nested Logic  
-- Data Segmentation & Filtering  
-- Aggregate Functions (AVG)  
-- Relational Database Analysis  
-- Problem Solving with Step-by-Step Query Design  
+- SQL Subqueries (IN, nested SELECT statements)  
+- Aggregate Functions (AVG, MAX, MIN)  
+- Data Filtering & Segmentation  
+- Business-Oriented Query Design  
+- Translating data into actionable insights  
+
+---
+
+## What I Learned
+
+- How to break complex SQL problems into smaller steps  
+- How to use subqueries to connect related datasets  
+- The importance of understanding table relationships (product_id as a key)  
+- How to think like a data analyst, not just write queries  
 
 ---
 
@@ -156,7 +167,7 @@ VALUES
 
 --
 
-#Analysis: 
+#SQL Analysis 
 
 --Write a query that selects the customer id of all the customers who are subscribed to Cell Phone service products.
 
