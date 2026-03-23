@@ -169,40 +169,7 @@ VALUES
 
 #SQL Analysis 
 
---Write a query that selects the customer id of all the customers who are subscribed to Cell Phone service products.
-
-SELECT customer_id
-FROM customer_subscriptions
-WHERE product_id IN (SELECT product_id
-FROM products
-WHERE product_type='Cell Phone Service');
-
---Write a query that will select the email address of all the customers with the "Internet" product type.
-
-SELECT email
-FROM customer_subscriptions
-WHERE product_id
-IN (SELECT product_id
-FROM products
-WHERE product_type='Internet');
-
---Write a query that will select the emails of all customers who are paying more than the average price for internet.
-
-SELECT email
-FROM customer_subscriptions
-WHERE price > (SELECT AVG(monthly_price) FROM products WHERE product_type='Internet');
-
---Which customers are subscribed to Cell Phone Service products?
-
-SELECT customer_id
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'Cell Phone Service');
-
---Which customers are subscribed to Internet products?
-
+1. Customers Subscribed to Internet Products
 SELECT email
 FROM customer_subscriptions
 WHERE product_id IN (
@@ -210,57 +177,44 @@ WHERE product_id IN (
     FROM products
     WHERE product_type = 'Internet');
 
---Which customers are paying more than the average Internet price?
+Business Insight:
+This query identifies the customer base subscribed to Internet services, which helps isolate a key segment for targeted promotions, upgrades, or service messaging.
 
+Business Impact:
+A telecom company could use this list to market faster plans, bundle offers, or retention campaigns specifically to internet users.
+
+2. Internet Customers Paying Above the Average Internet Price
 SELECT email
 FROM customer_subscriptions
-WHERE price > (
+WHERE product_id IN (
+    SELECT product_id
+    FROM products
+    WHERE product_type = 'Internet')
+AND price > (
     SELECT AVG(monthly_price)
     FROM products
     WHERE product_type = 'Internet');
 
---Which customers are paying less than the average Internet price?
+Business Insight:
+This query highlights customers paying above the average price for Internet services, which may indicate a premium customer segment.
 
-SELECT email
-FROM customer_subscriptions
-WHERE price < (
-    SELECT AVG(monthly_price)
-    FROM products
-    WHERE product_type = 'Internet');
+Business Impact:
+These customers may be strong candidates for loyalty campaigns, premium support offerings, or upsell opportunities tied to high-value services.
 
---Which customers are subscribed to the most expensive product?
-
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE monthly_price = (
-        SELECT MAX(monthly_price)
-        FROM products));
-
---Which customers are subscribed to the least expensive product?
-
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE monthly_price = (
-        SELECT MIN(monthly_price)
-        FROM products));
-
---Which Internet products are priced above the average Internet product price?
-
+3. Products With No Customer Subscriptions
 SELECT product_name
 FROM products
-WHERE product_type = 'Internet'
-AND monthly_price > (
-    SELECT AVG(monthly_price)
-    FROM products
-    WHERE product_type = 'Internet');
+WHERE product_id NOT IN (
+    SELECT product_id
+    FROM customer_subscriptions);
 
--- 8. Which customers are subscribed to premium Internet plans?
+Business Insight:
+This query identifies products that currently have no active subscribers, which can reveal underperforming offerings in the product catalog.
+
+Business Impact:
+A business could use this information to reevaluate pricing, improve marketing, redesign the product, or remove it altogether if it is not generating customer interest.
+
+4. Customers Subscribed to Premium Internet Plans
 SELECT email
 FROM customer_subscriptions
 WHERE product_id IN (
@@ -272,26 +226,13 @@ WHERE product_id IN (
         FROM products
         WHERE product_type = 'Internet'));
 
+Business Insight:
+This query identifies customers subscribed to Internet plans priced above the average within that category, helping define a premium-tier audience.
 
---Which customers are subscribed to products with unlimited data?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE data_limit_gb IS NULL);
+Business Impact:
+This segment could be useful for premium plan retention, white-glove customer service strategies, or early access offers for higher-speed or bundled services.
 
-
---Which customers are subscribed to products with capped data limits?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE data_limit_gb IS NOT NULL);
-
-
---Which customers are subscribed to the fastest Internet plan?
+5. Customers Subscribed to the Fastest Internet Plan
 SELECT email
 FROM customer_subscriptions
 WHERE product_id IN (
@@ -302,136 +243,8 @@ WHERE product_id IN (
         FROM products
         WHERE product_type = 'Internet'));
 
+Business Insight:
+This query identifies customers subscribed to the fastest available Internet plan, which often represents high-demand or high-value users.
 
---Which customers have above-average Internet speeds?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'Internet'
-    AND speed_mbps > (
-        SELECT AVG(speed_mbps)
-        FROM products
-        WHERE product_type = 'Internet'));
-
-
---Which products have at least one customer subscription?
-SELECT product_name
-FROM products
-WHERE product_id IN (
-    SELECT product_id
-    FROM customer_subscriptions);
-
-
---Which products have no customer subscriptions?
-SELECT product_name
-FROM products
-WHERE product_id NOT IN (
-    SELECT product_id
-    FROM customer_subscriptions);
-
-
---Which product types have products priced above $50?
-SELECT DISTINCT product_type
-FROM products
-WHERE monthly_price > 50;
-
-
---Which customers are subscribed to TV Packages?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'TV Package');
-
-
---Which customers are paying the exact listed monthly price?
-SELECT email
-FROM customer_subscriptions
-WHERE price IN (
-    SELECT monthly_price
-    FROM products);
-
-
---Which customers are paying more than the average price across all products?
-SELECT email
-FROM customer_subscriptions
-WHERE price > (
-    SELECT AVG(monthly_price)
-    FROM products);
-
-
---Which products are more expensive than all Cell Phone Service products?
-SELECT product_name
-FROM products
-WHERE monthly_price > (
-    SELECT MAX(monthly_price)
-    FROM products
-    WHERE product_type = 'Cell Phone Service');
-
-
---Which customers are subscribed to below-average priced products?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE monthly_price < (
-        SELECT AVG(monthly_price)
-        FROM products));
-
-
---Which Internet products have above-average speed and below-average price?
-SELECT product_name
-FROM products
-WHERE product_type = 'Internet'
-AND speed_mbps > (
-    SELECT AVG(speed_mbps)
-    FROM products
-    WHERE product_type = 'Internet')
-AND monthly_price < (
-    SELECT AVG(monthly_price)
-    FROM products
-    WHERE product_type = 'Internet');
-
-
---Which customers are subscribed to below-average priced Internet plans?
-SELECT email
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'Internet'
-    AND monthly_price < (
-        SELECT AVG(monthly_price)
-        FROM products
-        WHERE product_type = 'Internet'));
-
-
---How many customers are subscribed to Internet products?
-SELECT COUNT(*) AS internet_customer_count
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'Internet');
-
-
---How many customers are subscribed to Cell Phone Service products?
-SELECT COUNT(*) AS cell_phone_customer_count
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'Cell Phone Service');
-
-
---How many customers are subscribed to TV Packages?
-SELECT COUNT(*) AS tv_package_customer_count
-FROM customer_subscriptions
-WHERE product_id IN (
-    SELECT product_id
-    FROM products
-    WHERE product_type = 'TV Package');
+Business Impact:
+These customers may be ideal for premium retention efforts, customer satisfaction outreach, or future product testing for advanced telecom services.
