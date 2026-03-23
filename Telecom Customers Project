@@ -1,3 +1,119 @@
+# Telecom Customer & Product Analysis
+
+In this project, I used SQL to analyze a telecommunications database containing customer subscription and product data. This project simulates real-world data analysis tasks performed at companies like AT&T, Comcast, and Verizon.
+
+The analysis focuses on identifying customer behaviors, product segmentation, and pricing insights using subqueries.
+
+---
+
+## Objective
+
+The primary goals of this analysis were to:
+
+- Identify customers subscribed to specific product types  
+- Analyze customer-product relationships using subqueries  
+- Compare customer pricing against product benchmarks  
+- Strengthen SQL skills in nested queries and filtering logic  
+
+---
+
+## Business Questions
+
+- Which customers are subscribed to **Cell Phone Service** products?  
+- Which customers use **Internet** services?  
+- Which customers are paying **above-average prices** for internet services?  
+- How can subqueries be used to filter customer data efficiently?  
+
+---
+
+## Dataset Overview
+
+This project uses a telecom database with two tables:
+
+### **1. products**
+- `product_id`  
+- `product_type`  
+- `monthly_price`  
+
+### **2. customer_subscriptions**
+- `customer_id`  
+- `product_id`  
+- `email`  
+- `price`  
+
+---
+
+## Tools & Skills Used
+
+- **SQL**
+  - SELECT  
+  - WHERE  
+  - IN  
+  - Subqueries  
+  - AVG  
+- **Data Filtering & Segmentation**  
+- **Relational Data Analysis**  
+- **GitHub**: Project documentation and version control  
+- **Analytical Thinking**  
+
+---
+
+## Methodology
+
+- Built **inner queries** to isolate relevant product data (e.g., product type)  
+- Constructed **outer queries** to retrieve customer-level insights  
+- Combined queries using the **IN operator** for dynamic filtering  
+- Used **aggregate functions (AVG)** to benchmark pricing  
+- Applied a structured approach:
+  - Inner query → Outer query → Combined solution  
+
+---
+
+## Key Insights
+
+- Subqueries enable **powerful filtering across related tables**  
+- Customer segmentation can be driven by **product type relationships**  
+- Identifying customers paying above average highlights:
+  - Potential upsell opportunities  
+  - Pricing inconsistencies  
+- Breaking queries into steps improves **accuracy and readability**  
+
+---
+
+## Recommendations
+
+- Use subqueries to simplify complex filtering instead of hardcoding values  
+- Monitor customers paying above-average prices for retention strategies  
+- Segment users by product type to improve targeted marketing  
+- Standardize pricing analysis across product categories  
+
+---
+
+## Next Steps
+
+- Introduce **JOINs** to combine tables more efficiently  
+- Expand analysis to include:
+  - Customer lifetime value  
+  - Product bundling patterns  
+- Visualize customer segmentation using Tableau or Power BI  
+- Analyze churn risk based on pricing and product type  
+
+---
+
+## Skills Demonstrated
+
+- SQL Subqueries & Nested Logic  
+- Data Segmentation & Filtering  
+- Aggregate Functions (AVG)  
+- Relational Database Analysis  
+- Problem Solving with Step-by-Step Query Design  
+
+---
+
+## Note
+
+This project uses a **sample telecom dataset** for educational and portfolio-building purposes, designed to simulate real-world analytical scenarios.
+
 CREATE TABLE products (
     product_id INTEGER PRIMARY KEY,
     product_name TEXT,
