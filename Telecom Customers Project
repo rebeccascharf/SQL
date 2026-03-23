@@ -114,6 +114,8 @@ This project uses a telecom database with two tables:
 
 This project uses a **sample telecom dataset** for educational and portfolio-building purposes, designed to simulate real-world analytical scenarios.
 
+---
+
 CREATE TABLE products (
     product_id INTEGER PRIMARY KEY,
     product_name TEXT,
