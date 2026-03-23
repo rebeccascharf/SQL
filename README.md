@@ -4,6 +4,6 @@ I'm always open to feedback, discussions, and collaboration! Feel free to explor
 
 Email: rebeccakscharf@gmail.com
 
-LinkedIn: linkedin.com/in/rebecca-boreham-532695a5
+LinkedIn:(https://www.linkedin.com/in/rebecca-scharf-532695a5/)
 
 Happy querying!
