@@ -154,6 +154,10 @@ VALUES
     (12101, 5, 25.00, 'e.okafor@example.com'),
     (12102, 2, 49.99, 'susan.wilson@example.com');
 
+--
+
+#Analysis: 
+
 --Write a query that selects the customer id of all the customers who are subscribed to Cell Phone service products.
 
 SELECT customer_id
