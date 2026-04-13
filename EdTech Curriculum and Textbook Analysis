@@ -1,0 +1,321 @@
+#EdTech Curriculum and Textbook Analysis
+
+This project demonstrates SQL-based analysis of an EdTech publishing dataset using multiple joins to answer real-world business questions around textbook adoption, author relationships, and curriculum alignment.
+
+The analysis focuses on connecting courses, textbooks, and authors to generate insights that could support curriculum planning and textbook sales strategy.
+
+--
+
+#Objective
+
+The primary goals of this analysis were to:
+
+-Identify current economics textbooks used in the curriculum
+-Connect textbooks to their associated authors
+-Analyze 12th-grade course textbook assignments
+-Determine which authors are tied to upper-level course materials
+-Strengthen SQL skills using multiple joins across related tables
+
+#Business Questions
+
+-Which current economics textbooks are being used in the curriculum?
+-Which authors are associated with current economics textbooks?
+-Which 12th-grade courses have assigned textbooks and authors?
+-How can multiple joins connect curriculum, textbook, and author data?
+-How can curriculum usage data support textbook sales strategy?
+
+#Dataset Overview
+
+This project uses an EdTech publishing database with four tables:
+
+1. Textbooks
+TextbookID
+Title
+Subject
+PublicationYear
+Current
+UpdatedVersion
+
+2. Courses
+CourseID
+CourseName
+GradeLevel
+TextbookID
+
+3. Authors
+AuthorID
+Name
+Reviewing
+
+4. AuthorTextbookLink
+AuthorID
+TextbookID
+
+#Tools & Skills Used
+
+SQL
+ SELECT
+ INNER JOIN
+ LEFT JOIN
+ WHERE
+
+-Relational Data Analysis
+-Curriculum and Content Mapping
+-Analytical Thinking
+
+#Methodology
+
+-Joined Textbooks to AuthorTextbookLink to connect books with author IDs
+-Joined AuthorTextbookLink to Authors to identify author names
+-Joined Courses to Textbooks to connect curriculum with assigned books
+-Used LEFT JOIN when all courses needed to be retained, even if textbook or author data was missing
+-Used INNER JOIN when only complete matches were needed
+
+#Followed a structured approach:
+
+Identify business question → Determine table relationships → Select join type → Filter results → Interpret business value
+
+#Key Insights
+
+-Multiple joins make it possible to trace textbooks from curriculum to authors
+-INNER JOIN is useful when the goal is to analyze only complete textbook-author-course relationships
+-LEFT JOIN is useful when all courses must be retained, even if some lack textbook or author assignments
+-Curriculum and textbook mapping can reveal sales opportunities tied to subject area and grade level
+-Breaking multi-join problems into smaller steps improves readability and accuracy
+
+#Recommendations
+
+-Use curriculum-to-textbook mapping to support targeted textbook sales outreach
+-Review current economics materials regularly to promote updated editions
+-Track author associations across subjects and grade levels to better understand content usage
+-Continue using structured join logic when analyzing educational publishing data
+
+#Next Steps
+
+Expand analysis to include:
+-Subjects by grade level
+-Outdated textbooks still assigned to courses
+-Authors with the widest curriculum reach
+-Add aggregate analysis to measure textbook adoption rates
+-Visualize textbook usage by grade and subject in Tableau or Power BI
+-Analyze which current textbooks have updated versions available for cross-sell opportunities
+
+#Skills Demonstrated
+
+-SQL Multi-Table Joins
+-INNER JOIN and LEFT JOIN Logic
+-Relational Database Analysis
+-Curriculum Data Mapping
+-Business-Oriented Query Design
+-Translating data into actionable insights
+
+#What I Learned
+
+-How to connect several related tables in one query
+-How different join types affect curriculum analysis results
+-How to break multi-step SQL problems into simpler parts
+-How to translate database relationships into business recommendations
+
+#Note
+
+This project uses a sample EdTech dataset for educational and portfolio-building purposes, designed to simulate real-world analytical scenarios in curriculum publishing and textbook sales.
+
+--
+
+#Database Schema
+
+CREATE TABLE Textbooks (
+    TextbookID INTEGER PRIMARY KEY,
+    Title TEXT,
+    Subject TEXT,
+    PublicationYear INTEGER,
+    Current TEXT, 
+    UpdatedVersion INTEGER
+);
+    
+CREATE TABLE Courses (
+    CourseID INTEGER PRIMARY KEY,
+    CourseName TEXT,
+    GradeLevel INTEGER,
+    TextbookID INTEGER
+);
+
+CREATE TABLE Authors (
+    AuthorID INTEGER PRIMARY KEY,
+    Name TEXT,
+    Reviewing INTEGER
+);
+    
+CREATE TABLE AuthorTextbookLink (
+    AuthorID INTEGER,
+    TextbookID INTEGER,
+    PRIMARY KEY (AuthorID, TextbookID)
+);
+Sample Data
+INSERT INTO Textbooks (TextbookID, Title, Subject, PublicationYear, Current, UpdatedVersion) VALUES
+(1, 'Literary History, A Short Introduction', 'English', 2000, 'Yes', NULL),
+(2, 'Introduction to Calculus', 'Mathematics', 2005, 'No', 26),
+(3, 'Principles of Economics, 4th Ed.', 'Economics', 2007, 'No', 18),
+(4, 'Advanced Principles of Economics, 3rd Ed.', 'Economics', 2009, 'No', 12),
+(5, 'The US Constitution, a History, 4th Ed.', 'History', 2010, 'No', 11),
+(6, 'Cellular Biology: A Closer Look, 5th Ed.', 'Science', 2010, 'No', 30),
+(7, 'A Beginner''s Guide to Poetry, 2nd Ed.', 'English', 2010, 'No', 19),
+(8, 'Ausgezeichnet! German for Beginners', 'Languages', 2012, 'Yes', NULL),
+(9, 'Indigenous Peoples of the Americas', 'History', 2014, 'No', 24),
+(10, 'Linear Algebra', 'Mathematics', 2014, 'Yes', NULL),
+(11, 'The US Constitution, a History, 5th Ed.', 'History', 2015, 'Yes', NULL),
+(12, 'Advanced Principles of Economics, 4th Ed.', 'Economics', 2015, 'Yes', NULL),
+(13, '¡Muy bien! Spanish for Beginners', 'Languages', 2016, 'Yes', NULL),
+(14, 'World History: Pre-Modern to 1750', 'History', 2016, 'Yes', NULL),
+(15, 'French in the Classroom', 'Languages', 2016, 'Yes', NULL),
+(16, 'Calculus in Depth', 'Mathematics', 2017, 'Yes', NULL),
+(17, 'World History: 1750 to Today', 'History', 2018, 'Yes', NULL),
+(18, 'Principles of Economics, 6th Ed.', 'Economics', 2018, 'Yes', NULL),
+(19, 'A Beginner''s Guide to Poetry, 3rd Ed.', 'English', 2018, 'Yes', NULL),
+(20, 'A Beginner''s Guide to American Sign Language', 'Languages', 2019, 'Yes', NULL),
+(21, 'Foundations of Microeconomics', 'Economics', 2019, 'Yes', NULL),
+(22, 'Introductory Statistics', 'Mathematics', 2019, 'Yes', NULL),
+(23, 'Advanced Biology', 'Science', 2019, 'Yes', NULL),
+(24, 'Indigenous Peoples of the Americas, 2nd Ed.', 'History', 2020, 'Yes', NULL),
+(25, 'Macroeconomics', 'Economics', 2020, 'Yes', NULL),
+(26, 'Introduction to Calculus, 3rd Ed.', 'Mathematics', 2020, 'Yes', NULL),
+(27, 'Chemistry in the Classroom', 'Science', 2021, 'Yes', NULL),
+(28, 'Elementary Algebra', 'Mathematics', 2021, 'Yes', NULL),
+(29, 'Principles of Environmental Science', 'Science', 2022, 'Yes', NULL),
+(30, 'Cellular Biology: A Closer Look, 7th Ed.', 'Science', 2023, 'Yes', NULL);
+
+INSERT INTO Courses (CourseID, CourseName, GradeLevel, TextbookID) VALUES
+(1, 'Algebra I', 9, 28),
+(2, 'Algebra II', 10, 10),
+(3, 'Biology I', 9, 6),
+(4, 'Biology II', 10, 23),
+(5, 'Calculus', 11, 26),
+(6, 'Honors Calculus', 11, 16),
+(7, 'Chemistry', 11, 27),
+(9, 'Economics I', 10, 18),
+(10, 'Economics II', 11, 12),
+(11, 'English I', 9, 1),
+(12, 'English II', 10, 7),
+(13, 'Environmental Science', 10, 29),
+(14, 'US History I', 9, 5),
+(15, 'US History II', 10, 9),
+(16, 'Macroeconomics', 12, 25),
+(17, 'World History I', 11, 14),
+(18, 'Microeconomics', 12, 21),
+(19, 'World History II', 12, 17),
+(20, 'ASL I', 9, 20),
+(21, 'French I', 9, 15),
+(22, 'German I', 9, 8),
+(23, 'Spanish I', 9, 13);
+
+INSERT INTO Authors (AuthorID, Name, Reviewing) VALUES
+(1, 'James Lin', NULL),
+(2, 'E. Okafor', NULL),
+(3, 'Elena Cortez', NULL),
+(4, 'Connie J. Perry', 7),
+(5, 'Benjamin Brown Jr.', NULL),
+(6, 'K. Mueller', 4),
+(7, 'Olivia Garcia', 23),
+(8, 'Mia Park', NULL),
+(10, 'Sophia dela Cruz', NULL),
+(11, 'Geoff Long', NULL),
+(12, 'Ajeet Patel', NULL),
+(13, 'Ava Simms', NULL),
+(14, 'L. Roth', NULL),
+(15, 'Michael Nguyen', NULL),
+(17, 'Isabella van der Hoeven', NULL),
+(18, 'T. Hernandez', NULL),
+(19, 'S. Awad', NULL),
+(20, 'Keisha T. Moore', NULL),
+(21, 'Emily Sorkin', 25),
+(22, 'L. Niemczyk', NULL),
+(23, 'Michel Durand', 6),
+(24, 'Antoine King', NULL),
+(25, 'Franklin Charles', 21);
+
+INSERT INTO AuthorTextbookLink (AuthorID, TextbookID) VALUES
+(1, 6),
+(1, 30),
+(2, 4),
+(2, 12),
+(3, 16),
+(4, 20),
+(5, 9),
+(5, 24),
+(6, 8),
+(7, 13),
+(8, 27),
+(9, 2),
+(10, 25),
+(11, 28),
+(12, 14),
+(13, 21),
+(14, 17),
+(15, 22),
+(17, 3),
+(18, 10),	
+(19, 29),
+(20, 5),
+(20, 11),
+(21, 7),
+(22, 26),
+(23, 15),
+(24, 23),
+(25, 1),
+(26, 19);
+
+#SQL Analysis
+
+-1. Current Economics Textbooks and Their Authors
+SELECT Textbooks.Title,
+       AuthorTextbookLink.AuthorID,
+       Authors.Name
+FROM Textbooks
+INNER JOIN AuthorTextbookLink
+    ON Textbooks.TextbookID = AuthorTextbookLink.TextbookID
+INNER JOIN Authors
+    ON AuthorTextbookLink.AuthorID = Authors.AuthorID
+WHERE Subject = 'Economics'
+  AND Current = 'Yes';
+
+Business Insight:
+This query identifies current economics textbooks that are actively used and links them to authors in the company database.
+
+Business Impact:
+Supports curriculum analysis and helps sales teams focus on currently adopted economics materials and the authors behind them.
+
+-2. 12th-Grade Courses with Textbook Titles and Author IDs
+SELECT Courses.CourseName,
+       Textbooks.Title,
+       AuthorTextbookLink.AuthorID
+FROM Courses
+LEFT JOIN Textbooks
+    ON Courses.TextbookID = Textbooks.TextbookID
+LEFT JOIN AuthorTextbookLink
+    ON Textbooks.TextbookID = AuthorTextbookLink.TextbookID
+WHERE Courses.GradeLevel = 12;
+
+Business Insight:
+This query returns all 12th-grade courses and includes associated textbook and author information where available.
+
+Business Impact:
+Useful for curriculum audits because it preserves all 12th-grade courses, even if some do not yet have a linked textbook or author.
+
+-3. 12th-Grade Courses with Textbooks and Author Names
+SELECT Courses.CourseName,
+       Textbooks.Title,
+       Authors.Name
+FROM Textbooks
+INNER JOIN Courses
+    ON Textbooks.TextbookID = Courses.TextbookID
+INNER JOIN AuthorTextbookLink
+    ON Textbooks.TextbookID = AuthorTextbookLink.TextbookID
+INNER JOIN Authors
+    ON AuthorTextbookLink.AuthorID = Authors.AuthorID
+WHERE Courses.GradeLevel = 12;
+
+Business Insight:
+This query identifies 12th-grade courses that have fully matched textbook and author records.
+
+Business Impact:
+Supports clearer reporting for sales and curriculum teams by showing only complete course-textbook-author relationships.
