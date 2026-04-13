@@ -1,0 +1,313 @@
+#EdTech Textbook Version and Peer Review Analysis
+
+This project demonstrates SQL-based analysis of an EdTech publishing dataset using self joins to answer real-world business questions around textbook edition tracking and author peer review assignments.
+
+The analysis focuses on identifying updated textbook versions and mapping author-to-author review relationships within the publishing workflow.
+
+--
+
+#Objective
+
+The primary goals of this analysis were to:
+
+-Track current textbooks and their out-of-date versions
+Identify textbooks that have updated editions
+Analyze author peer review assignments
+-Strengthen SQL skills using self joins and aliases
+-Improve understanding of how one table can relate to itself in multiple ways
+
+#Business Questions
+
+-Which textbooks are current, and which older editions do they replace?
+-Which textbooks have updated versions?
+-Which authors are currently assigned to review another author’s work?
+-How can self joins be used to compare rows within the same table?
+-How can textbook version tracking support publishing decisions?
+-
+#Dataset Overview
+
+This project uses an EdTech publishing database with four tables:
+
+1. Textbooks
+TextbookID
+Title
+Subject
+PublicationYear
+Current
+UpdatedVersion
+
+2. Courses
+CourseID
+CourseName
+GradeLevel
+TextbookID
+
+3. Authors
+AuthorID
+Name
+Reviewing
+4. AuthorTextbookLink
+AuthorID
+TextbookID
+
+#Tools & Skills Used
+
+SQL
+ SELECT
+ LEFT JOIN
+ INNER JOIN
+ SELF JOIN
+ ORDER BY
+
+-Aliasing
+-Relational Data Analysis
+-Edition Tracking and Relationship Mapping
+-Analytical Thinking
+
+#Methodology
+
+-Used a self join on the Textbooks table to connect current textbooks to older editions
+-Used LEFT JOIN to display all textbooks, including those without a prior version
+-Used INNER JOIN to return only textbooks with updated versions
+-Used a self join on the Authors table to connect reviewers to the authors they are reviewing
+-Applied aliases to make self joins readable and easy to interpret
+
+#Followed a structured approach:
+
+Identify repeated relationship → Join table to itself → Apply aliases → Interpret business value
+
+#Key Insights
+
+-Self joins are useful when records in a table reference other records in the same table
+-LEFT JOIN provides a complete view of all textbooks, even when no previous edition exists
+-INNER JOIN isolates only textbooks with known older versions
+-Self joining the authors table makes peer review relationships visible
+--Clear aliasing is essential when working with self joins to avoid confusion
+
+#Recommendations
+
+-Use self joins to track textbook version history and support edition lifecycle management
+-Monitor updated editions to ensure current books are being promoted to schools
+-Use peer review mapping to understand editorial workflows and collaboration across authors
+-Continue applying aliases consistently to improve query readability and maintainability
+
+#Next Steps
+
+Expand analysis to include:
+-Outdated textbooks still assigned to courses
+-Subjects with the most frequent textbook updates
+-Authors involved in both writing and peer review
+-Add aggregate analysis to count updated editions by subject
+-Visualize textbook version transitions and peer review networks
+-Combine self joins with other joins to deepen curriculum and publishing analysis
+
+#Skills Demonstrated
+
+-SQL Self Joins
+-LEFT JOIN and INNER JOIN Logic
+-Aliasing for Readability
+-Relational Database Analysis
+-Publishing Workflow Analysis
+-Translating data into actionable insights
+
+#What I Learned
+
+-How to use self joins to compare rows within the same table
+-How join type changes the completeness of the results
+-How aliases make self joins easier to read and maintain
+-How to translate textbook version and peer review relationships into business context
+
+#Note
+
+This project uses a sample EdTech dataset for educational and portfolio-building purposes, designed to simulate real-world analytical scenarios in curriculum publishing and textbook lifecycle management.
+
+--
+
+#Database Schema
+
+CREATE TABLE Textbooks (
+    TextbookID INTEGER PRIMARY KEY,
+    Title TEXT,
+    Subject TEXT,
+    PublicationYear INTEGER,
+    Current TEXT, 
+    UpdatedVersion INTEGER
+);
+    
+CREATE TABLE Courses (
+    CourseID INTEGER PRIMARY KEY,
+    CourseName TEXT,
+    GradeLevel INTEGER,
+    TextbookID INTEGER
+);
+
+CREATE TABLE Authors (
+    AuthorID INTEGER PRIMARY KEY,
+    Name TEXT,
+    Reviewing INTEGER
+);
+    
+CREATE TABLE AuthorTextbookLink (
+    AuthorID INTEGER,
+    TextbookID INTEGER,
+    PRIMARY KEY (AuthorID, TextbookID)
+);
+Sample Data
+INSERT INTO Textbooks (TextbookID, Title, Subject, PublicationYear, Current, UpdatedVersion) VALUES
+(1, 'Literary History, A Short Introduction', 'English', 2000, 'Yes', NULL),
+(2, 'Introduction to Calculus', 'Mathematics', 2005, 'No', 26),
+(3, 'Principles of Economics, 4th Ed.', 'Economics', 2007, 'No', 18),
+(4, 'Advanced Principles of Economics, 3rd Ed.', 'Economics', 2009, 'No', 12),
+(5, 'The US Constitution, a History, 4th Ed.', 'History', 2010, 'No', 11),
+(6, 'Cellular Biology: A Closer Look, 5th Ed.', 'Science', 2010, 'No', 30),
+(7, 'A Beginner''s Guide to Poetry, 2nd Ed.', 'English', 2010, 'No', 19),
+(8, 'Ausgezeichnet! German for Beginners', 'Languages', 2012, 'Yes', NULL),
+(9, 'Indigenous Peoples of the Americas', 'History', 2014, 'No', 24),
+(10, 'Linear Algebra', 'Mathematics', 2014, 'Yes', NULL),
+(11, 'The US Constitution, a History, 5th Ed.', 'History', 2015, 'Yes', NULL),
+(12, 'Advanced Principles of Economics, 4th Ed.', 'Economics', 2015, 'Yes', NULL),
+(13, '¡Muy bien! Spanish for Beginners', 'Languages', 2016, 'Yes', NULL),
+(14, 'World History: Pre-Modern to 1750', 'History', 2016, 'Yes', NULL),
+(15, 'French in the Classroom', 'Languages', 2016, 'Yes', NULL),
+(16, 'Calculus in Depth', 'Mathematics', 2017, 'Yes', NULL),
+(17, 'World History: 1750 to Today', 'History', 2018, 'Yes', NULL),
+(18, 'Principles of Economics, 6th Ed.', 'Economics', 2018, 'Yes', NULL),
+(19, 'A Beginner''s Guide to Poetry, 3rd Ed.', 'English', 2018, 'Yes', NULL),
+(20, 'A Beginner''s Guide to American Sign Language', 'Languages', 2019, 'Yes', NULL),
+(21, 'Foundations of Microeconomics', 'Economics', 2019, 'Yes', NULL),
+(22, 'Introductory Statistics', 'Mathematics', 2019, 'Yes', NULL),
+(23, 'Advanced Biology', 'Science', 2019, 'Yes', NULL),
+(24, 'Indigenous Peoples of the Americas, 2nd Ed.', 'History', 2020, 'Yes', NULL),
+(25, 'Macroeconomics', 'Economics', 2020, 'Yes', NULL),
+(26, 'Introduction to Calculus, 3rd Ed.', 'Mathematics', 2020, 'Yes', NULL),
+(27, 'Chemistry in the Classroom', 'Science', 2021, 'Yes', NULL),
+(28, 'Elementary Algebra', 'Mathematics', 2021, 'Yes', NULL),
+(29, 'Principles of Environmental Science', 'Science', 2022, 'Yes', NULL),
+(30, 'Cellular Biology: A Closer Look, 7th Ed.', 'Science', 2023, 'Yes', NULL);
+
+INSERT INTO Courses (CourseID, CourseName, GradeLevel, TextbookID) VALUES
+(1, 'Algebra I', 9, 28),
+(2, 'Algebra II', 10, 10),
+(3, 'Biology I', 9, 6),
+(4, 'Biology II', 10, 23),
+(5, 'Calculus', 11, 26),
+(6, 'Honors Calculus', 11, 16),
+(7, 'Chemistry', 11, 27),
+(9, 'Economics I', 10, 18),
+(10, 'Economics II', 11, 12),
+(11, 'English I', 9, 1),
+(12, 'English II', 10, 7),
+(13, 'Environmental Science', 10, 29),
+(14, 'US History I', 9, 5),
+(15, 'US History II', 10, 9),
+(16, 'Macroeconomics', 12, 25),
+(17, 'World History I', 11, 14),
+(18, 'Microeconomics', 12, 21),
+(19, 'World History II', 12, 17),
+(20, 'ASL I', 9, 20),
+(21, 'French I', 9, 15),
+(22, 'German I', 9, 8),
+(23, 'Spanish I', 9, 13);
+
+INSERT INTO Authors (AuthorID, Name, Reviewing) VALUES
+(1, 'James Lin', NULL),
+(2, 'E. Okafor', NULL),
+(3, 'Elena Cortez', NULL),
+(4, 'Connie J. Perry', 7),
+(5, 'Benjamin Brown Jr.', NULL),
+(6, 'K. Mueller', 4),
+(7, 'Olivia Garcia', 23),
+(8, 'Mia Park', NULL),
+(10, 'Sophia dela Cruz', NULL),
+(11, 'Geoff Long', NULL),
+(12, 'Ajeet Patel', NULL),
+(13, 'Ava Simms', NULL),
+(14, 'L. Roth', NULL),
+(15, 'Michael Nguyen', NULL),
+(17, 'Isabella van der Hoeven', NULL),
+(18, 'T. Hernandez', NULL),
+(19, 'S. Awad', NULL),
+(20, 'Keisha T. Moore', NULL),
+(21, 'Emily Sorkin', 25),
+(22, 'L. Niemczyk', NULL),
+(23, 'Michel Durand', 6),
+(24, 'Antoine King', NULL),
+(25, 'Franklin Charles', 21);
+
+INSERT INTO AuthorTextbookLink (AuthorID, TextbookID) VALUES
+(1, 6),
+(1, 30),
+(2, 4),
+(2, 12),
+(3, 16),
+(4, 20),
+(5, 9),
+(5, 24),
+(6, 8),
+(7, 13),
+(8, 27),
+(9, 2),
+(10, 25),
+(11, 28),
+(12, 14),
+(13, 21),
+(14, 17),
+(15, 22),
+(17, 3),
+(18, 10),
+(19, 29),
+(20, 5),
+(20, 11),
+(21, 7),
+(22, 26),
+(23, 15),
+(24, 23),
+(25, 1),
+(26, 19);
+
+#SQL Analysis
+
+-1. All Textbooks with Their Previous Versions
+SELECT A.Subject,
+       A.Title AS textbook,
+       B.Title AS previous_version
+FROM Textbooks A
+LEFT JOIN Textbooks B
+    ON A.TextbookID = B.UpdatedVersion
+ORDER BY textbook;
+
+Business Insight:
+This query provides a full list of textbooks and shows whether each current title replaced an older edition.
+
+Business Impact:
+Helps publishing and curriculum teams understand textbook version history and identify where updated editions have replaced prior books.
+
+-2. Textbooks That Have Updated Versions
+SELECT A.Subject,
+       A.Title AS textbook,
+       B.Title AS previous_version
+FROM Textbooks A
+INNER JOIN Textbooks B
+    ON A.TextbookID = B.UpdatedVersion
+ORDER BY textbook;
+
+Business Insight:
+This query isolates only textbooks that are known updated replacements for older editions.
+
+Business Impact:
+Useful for monitoring edition rollouts, supporting sales outreach, and ensuring schools transition to the most current materials.
+
+-3. Authors Reviewing Other Authors
+SELECT authors.AuthorID,
+       authors.Name AS Reviewer,
+       peers.Name AS Being_reviewed
+FROM Authors authors
+INNER JOIN Authors peers
+    ON authors.Reviewing = peers.AuthorID
+ORDER BY authors.AuthorID;
+
+Business Insight:
+This query maps authors who are assigned to review another author’s work.
+
+Business Impact:
+Supports editorial workflow visibility and helps teams understand peer review assignments across the author network.
