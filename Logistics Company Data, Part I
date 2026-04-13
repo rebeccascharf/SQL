@@ -4,22 +4,24 @@ This project demonstrates SQL-based analysis of a logistics dataset using joins 
 
 The analysis focuses on connecting customer and shipment data to generate operational and marketing insights.
 
-Objective
+#Objective
 
 The primary goals of this analysis were to:
 
-Identify customers who have placed orders
-Track shipments based on delivery status
-Analyze customer shipping behavior
-Identify opportunities for targeted marketing campaigns
-Strengthen SQL skills using joins and filtering logic
-Business Questions
-Which customers have placed an order?
-Which shipments are currently in transit?
-What addresses are associated with active shipments?
-Which customers have not used Express shipping?
-How can joins be used to connect customer and shipment data?
-Dataset Overview
+-Identify customers who have placed orders
+-Track shipments based on delivery status
+-Analyze customer shipping behavior
+-Identify opportunities for targeted marketing campaigns
+-Strengthen SQL skills using joins and filtering logic
+
+#Business Questions
+
+-Which customers have placed an order?
+-Which shipments are currently in transit?
+-What addresses are associated with active shipments?
+-Which customers have not used Express shipping?
+-How can joins be used to connect customer and shipment data?
+-Dataset Overview
 
 This project uses a logistics database with two tables:
 
