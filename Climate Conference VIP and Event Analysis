@@ -1,0 +1,373 @@
+#Climate Conference VIP and Event Analysis
+
+This project demonstrates SQL-based analysis of a climate conference dataset using joins, a self join, and a subquery to answer real-world business questions around VIP attendance, event participation, hotel reservations, and conference logistics.
+
+The analysis focuses on connecting VIP profiles, reservations, hotels, and event assignments to support conference planning and attendee management.
+
+--
+
+#Objective
+
+The primary goals of this analysis were to:
+
+-Track VIP hotel reservations and event participation
+-Identify RSVP activity for conference-related events
+-Connect attendees to their assigned sessions and hotels
+-Analyze internal VIP feedback relationships
+-Strengthen SQL skills using joins, self joins, and subqueries
+
+#Business Questions
+
+-Which VIPs have hotel reservations, and which do not?
+-Which VIPs RSVP’d for the welcome event?
+-Which event is each VIP associated with, and where are they staying?
+-Which VIPs are assigned to provide feedback to other VIPs?
+-Which hotel has the most reservations?
+-Which government-affiliated VIPs RSVP’d for dinner?
+-How many VIPs are assigned to each event?
+
+#Dataset Overview
+
+This project uses a climate conference database with four tables:
+
+1. vips
+member_id
+last_name
+first_name
+event
+provides_feedback_to
+association
+assoc_type
+member_since
+
+2. reservations
+member_id
+hotel
+welcome_rsvp
+dinner_rsvp
+
+3. events
+event_id
+event_name
+event_type
+
+4. hotels
+hotel_id
+hotel_name
+address
+
+#Tools & Skills Used
+
+SQL
+ SELECT
+ LEFT JOIN
+ INNER JOIN
+ Multiple JOINs
+ SELF JOIN
+ Subquery
+ GROUP BY
+ ORDER BY
+ COUNT
+
+-Relational Data Analysis
+-Event and Attendance Analysis
+-Analytical Thinking
+
+#Methodology
+
+-Used LEFT JOIN to retain all VIPs, including those without reservations
+-Used INNER JOIN to isolate confirmed RSVP and participation records
+-Combined multiple joins to connect VIPs with events, reservations, and hotels
+-Used a self join on the vips table to map feedback relationships between members
+-Used a subquery to identify VIPs staying at the hotel with the highest number of reservations
+-Applied aggregation with COUNT to measure event participation
+
+#Followed a structured approach:
+Define business question → Identify related tables → Choose join type → Filter or aggregate results → Interpret operational value
+
+#Key Insights
+
+-Joins make it possible to connect conference logistics data across attendees, events, and accommodations
+-LEFT JOIN is useful for identifying VIPs even when reservation data is missing
+-INNER JOIN helps isolate confirmed participation and RSVP behavior
+Self joins reveal internal reviewer or feedback relationships within the VIP group
+-Subqueries help answer more complex logistical questions such as identifying the most-booked hotel
+-Aggregation supports event planning by showing attendance levels across sessions
+
+#Recommendations
+
+-Use reservation and RSVP tracking to support better VIP logistics planning
+-Monitor hotel booking patterns to improve room block planning for future conferences
+-Track event attendance to inform session capacity and scheduling decisions
+-Use feedback assignment data to better coordinate peer review responsibilities among VIP speakers
+-Continue combining joins and subqueries to support operational conference reporting
+
+#Next Steps
+
+Expand analysis to include:
+
+-RSVP rates by association type
+-Hotel preferences by organization category
+-Event participation by industry sector
+-Add more aggregate analysis for conference planning metrics
+-Visualize event attendance and hotel usage in Tableau or Power BI
+-Analyze whether newer members participate differently than long-term members
+
+#Skills Demonstrated
+
+-SQL JOINs (LEFT JOIN, INNER JOIN)
+-Multiple Table Joins
+-SELF JOIN Logic
+-Subqueries
+-Aggregation with COUNT
+-Relational Database Analysis
+-Event Operations Analysis
+-Translating data into actionable insights
+
+#What I Learned
+
+-How to connect multiple datasets to answer operations-focused questions
+-How different join types affect conference reporting outputs
+-How self joins can reveal internal relationships within one table
+-How subqueries help answer more advanced logistical questions
+-How to translate raw attendance and reservation data into useful business insights
+
+#Note
+
+This project uses a sample climate conference dataset for educational and portfolio-building purposes, designed to simulate real-world analytical scenarios in event operations and attendee management.
+
+--
+
+#Database Schema
+
+CREATE TABLE vips (
+    member_id INTEGER PRIMARY KEY,
+    last_name TEXT,
+    first_name TEXT,
+    event INTEGER,
+    provides_feedback_to INTEGER,
+    association TEXT,
+    assoc_type TEXT,
+    member_since INTEGER
+);
+
+CREATE TABLE reservations (
+    member_id INTEGER,
+    hotel INTEGER,
+    welcome_rsvp BIT,
+    dinner_rsvp BIT
+);
+
+CREATE TABLE events (
+    event_id INTEGER PRIMARY KEY,
+    event_name TEXT,
+    event_type TEXT
+);
+
+CREATE TABLE hotels (
+    hotel_id INTEGER PRIMARY KEY,
+    hotel_name TEXT,
+    address TEXT
+);
+Sample Data
+INSERT INTO vips VALUES
+(2814, 'Fletcher', 'David', 5, 3742, 'Anishinabek Educational Institute', 'education', 2004),
+(1944, 'Kim', 'Jiho', 4, 4230, 'Appalachian State', 'education', 1991),
+(3889, 'Kowalski', 'Alex', 9, 3460, 'Brigg & McKinnnon AEC', 'private', 2015),
+(3775, 'Al-Hassan', 'Amina', 6, 3891, 'California Department of Water Resources', 'government', 2013),
+(4003, 'Chang', 'Nathan', 8, 3960, 'Chang Engineers, LLC', 'private', 2017),
+(3490, 'Anderson', 'Shanae', 2, 4315, 'Chicago Department of Public Health', 'government', 2008),
+(3077, 'Murphy', 'Aisling', 3, 2731, 'Climate Impacts on Farming Institute', 'research', 2006),
+(3960, 'Ivanov', 'Dmitri', 6, 2814, 'Cooperative Institute for Climate, Ocean, and Ecosystem Studies', 'research', 2016),
+(4402, 'Bennett', 'Leah', NULL, NULL, 'Denver Climate Research Foundation', 'research', 2024),
+(3891, 'Roy', 'Harper', 4, 3077, 'Environmental Science Associates', 'private', 2015),
+(4386, 'Silva', 'Thiago', NULL, NULL, 'Everglades Research Institute', 'research', 2023),
+(4297, 'Chukwu', 'Ifeoma', 9, 2716, 'Georgia State University', 'education', 2020),
+(3189, 'Martinez', 'Isabella', 8, 2011, 'Iowa State University', 'education', 2007),
+(3491, 'Gonzalez', 'Victor', 5, 3047, 'McGill University', 'education', 2008),
+(3742, 'Brown', 'Timothy', 3, 3490, 'Michigan State University', 'education', 2012),
+(4361, 'Riley', 'Daniel', 6, 1944, 'Minnesota Water Board', 'education', 2023),
+(1934, 'Garcia', 'Mateo', NULL, NULL, 'Oklahoma Department of Wildlife Conservation', 'government', 1990),
+(2011, 'Patel', 'Anika', 7, 3491, 'Renewable Energy Research Center, Honolulu', 'research', 1995),
+(4315, 'Shepherd', 'Priya', 10, 4003, 'Tech517', 'private', 2022),
+(1738, 'Johnson', 'Denny', NULL, NULL, 'Texas Department of Conservation and Natural Resources', 'government', 1987),
+(4230, 'Parker', 'Moss', 2, 3719, 'University of California, Davis', 'education', 2019),
+(2731, 'Rivera', 'Juan', 1, 4297, 'University of Montana', 'education', 2003),
+(2091, 'Haines', 'Keisha', 11, 3189, 'University of North Carolina', 'education', 1998),
+(2551, 'Nguyen', 'Linh', 2, 2091, 'University of Pennsylvania', 'education', 2002),
+(3047, 'Singh', 'Aarav', 4, 2551, 'US Department of Fish and Wildlife', 'government', 2005),
+(4112, 'Fernandez', 'Lucia', NULL, NULL, 'US Department of Fish and Wildlife', 'government', 2018),
+(3719, 'Denton', 'K. L.', 11, 3889, 'US Department of Housing and Urban Development', 'government', 2011),
+(3460, 'Chen', 'Beverly', 7, 4361, 'US Department of Natural Resources', 'government', 2008),
+(2716, 'Rodriguez', 'Sofia', 7, 3775, 'US Department of Renewable Energy', 'government', 2003),
+(2800, 'Lee', 'Min-Jun', NULL, NULL, 'US Department of Renewable Energy', 'government', 2004);
+
+INSERT INTO reservations VALUES
+(3491, 1, 1, 1),
+(4361, 1, 1, 1),
+(3047, 2, 1, 1),
+(3775, 1, 1, 1),
+(4003, 3, 0, 1),
+(4402, 2, 1, 1),
+(3891, 3, 1, 1),
+(2011, 1, 1, 1),
+(4808, 2, 1, 1),
+(3490, 1, 0, 1),
+(3189, 1, 1, 1),
+(1944, 1, 0, 1),
+(2716, 2, 0, 1),
+(2551, 2, 1, 1),
+(4386, 2, 0, 1),
+(2814, 3, 1, 1),
+(1738, 2, 0, 1),
+(3960, 1, 1, 1),
+(4315, 3, 1, 0),
+(4722, 2, 1, 1),
+(2731, 3, 1, 1),
+(2091, 1, 1, 0),
+(3889, 3, 1, 1),
+(3742, 2, 0, 1),
+(3719, 2, 0, 1),
+(3460, 2, 1, 1),
+(3077, 2, 0, 1),
+(4420, 1, 1, 0),
+(2800, 2, 0, 1),
+(1934, 3, 1, 1);
+
+INSERT INTO events VALUES
+(1, 'Climate Change Communication: Engaging the Public and Policy Makers', 'Keynote'),
+(2, 'Climate Change and Public Health: Risks and Responses', 'Panel'),
+(3, 'Climate Change and Agriculture: Ensuring Food Security', 'Panel'),
+(4, 'Biodiversity and Ecosystem Services in a Changing Climate', 'Panel'),
+(5, 'Indigenous Knowledge and Climate Change Adaptation', 'Panel'),
+(6, 'The Role of Oceans in Climate Change: Impacts and Solutions', 'Panel'),
+(7, 'Climate Change and Renewable Energy: Innovations and Challenges', 'Panel'),
+(8, 'Climate Justice and Equity: Addressing Disproportionate Impacts', 'Panel'),
+(9, 'The Economic Impact of Climate Change: Costs and Opportunities', 'Panel'),
+(10, 'Technological Innovations for Climate Monitoring and Assessment', 'Workshop'),
+(11, 'Urban Resilience: Designing Climate-Smart Cities', 'Workshop'),
+(12, 'The Role of Policy in Combating Climate Change', 'Workshop');
+
+INSERT INTO hotels VALUES
+(1, 'Hyatt Downtown', '392 South Main Street, Cityville, PA'),
+(2, 'Marriott', '1240 Marshall Avenue, Cityville, PA'),
+(3, 'Four Season''s', '900 Winter Road, Cityville, PA');
+
+#SQL Analysis
+
+-1. All VIPs and Their Hotel Reservations
+SELECT v.member_id,
+       v.first_name,
+       v.last_name,
+       r.hotel
+FROM vips v
+LEFT JOIN reservations r
+    ON v.member_id = r.member_id;
+
+Business Insight:
+This query lists all VIPs and their associated hotel reservations, while preserving VIPs who do not yet have a reservation.
+
+Business Impact:
+Useful for identifying missing hotel bookings and ensuring all VIP logistics are accounted for before the conference.
+
+-2. VIPs Who RSVP’d for the Welcome Event
+SELECT v.first_name,
+       v.last_name
+FROM vips v
+INNER JOIN reservations r
+    ON v.member_id = r.member_id
+WHERE r.welcome_rsvp = 1;
+
+Business Insight:
+This query identifies which VIPs confirmed attendance for the welcome event.
+
+Business Impact:
+Supports planning for attendance, catering, and guest management at the opening function.
+
+-3. Event Names, Attendee Names, and Hotel Names
+SELECT e.event_name,
+       v.first_name,
+       v.last_name,
+       h.hotel_name
+FROM vips v
+INNER JOIN events e
+    ON v.event = e.event_id
+LEFT JOIN reservations r
+    ON v.member_id = r.member_id
+LEFT JOIN hotels h
+    ON r.hotel = h.hotel_id;
+
+Business Insight:
+This query connects each VIP to their assigned event and hotel, creating a more complete attendance profile.
+
+Business Impact:
+Helps organizers coordinate speaking schedules, lodging, and VIP experience planning across the conference.
+
+-4. VIP Feedback Relationships
+SELECT v1.first_name AS feedback_giver,
+       v1.last_name AS giver_last,
+       v2.first_name AS feedback_receiver,
+       v2.last_name AS receiver_last
+FROM vips v1
+JOIN vips v2
+    ON v1.provides_feedback_to = v2.member_id;
+
+Business Insight:
+This self join shows which VIPs are assigned to provide feedback to other VIPs.
+
+Business Impact:
+Supports conference session evaluation planning and helps organizers manage peer feedback responsibilities.
+
+-5. VIPs Staying at the Hotel with the Most Reservations
+SELECT v.first_name,
+       v.last_name,
+       h.hotel_name
+FROM vips v
+JOIN reservations r
+    ON v.member_id = r.member_id
+JOIN hotels h
+    ON r.hotel = h.hotel_id
+WHERE r.hotel = (
+    SELECT hotel
+    FROM reservations
+    GROUP BY hotel
+    ORDER BY COUNT(*) DESC
+    LIMIT 1
+);
+
+Business Insight:
+This query identifies VIPs staying at the hotel with the highest reservation count.
+
+Business Impact:
+Useful for concentrated logistics planning, transportation coordination, and hotel-specific attendee support.
+
+-6. Government-Affiliated VIPs Who RSVP’d for Dinner
+SELECT v.first_name,
+       v.last_name,
+       v.association
+FROM vips v
+JOIN reservations r
+    ON v.member_id = r.member_id
+WHERE v.assoc_type = 'government'
+  AND r.dinner_rsvp = 1;
+
+Business Insight:
+This query isolates government-affiliated VIPs who confirmed attendance for the dinner event.
+
+Business Impact:
+Supports stakeholder engagement planning and helps organizers understand participation from government attendees.
+
+-7. Number of VIPs Assigned to Each Event
+SELECT e.event_name,
+       COUNT(v.member_id) AS attendee_count
+FROM events e
+LEFT JOIN vips v
+    ON e.event_id = v.event
+GROUP BY e.event_name
+ORDER BY attendee_count DESC;
+
+Business Insight:
+This query measures how many VIPs are assigned to each event.
+
+Business Impact:
+Helps organizers assess event popularity, staffing needs, and room capacity planning.
