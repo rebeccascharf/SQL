@@ -1,0 +1,436 @@
+# Tracking Down a Thief – SQL Mystery Analysis
+
+This project demonstrates SQL-based analysis by solving a fictional mystery using relational data. The goal was to identify the suspect behind the theft of the rare Cotton Candy Poodle by combining clues across multiple tables.
+
+The investigation uses SQL joins, filtering, pattern matching, and aggregation to narrow down suspects based on location data, vehicle details, associate relationships, and alibi statements.
+
+---
+
+## Objective
+
+The primary goals of this analysis were to:
+
+- Identify suspects present at the crime scene
+- Investigate suspect relationships and associates
+- Match suspects to the getaway vehicle
+- Analyze suspicious alibi statements
+- Compare alibi locations with actual phone location data
+- Combine all clue-based results to identify the final suspect
+
+---
+
+## Mystery Questions
+
+- Which suspects were in Carnival City at the exact time of the crime?
+- Which suspects have associates who are both friends and specialists?
+- Which suspects own a minivan with a license plate ending in D0G?
+- Which suspects have alibis containing the words dog, cotton, or candy?
+- Which suspects have alibi locations that do not match their phone data?
+- Which suspect appears in all result sets?
+
+---
+
+## Dataset Overview
+
+This project uses a fictional database with five tables:
+
+### 1. suspect_info
+- suspect_id
+- suspect_first_name
+- suspect_last_name
+
+### 2. location_info
+- suspect_id
+- cell_location
+- date_time
+
+### 3. vehicle_info
+- suspect_id
+- car_type
+- car_model
+- license_plate
+
+### 4. associates_info
+- suspect_id
+- associate_alias
+- occupation
+- relationship_to_suspect
+
+### 5. alibi_info
+- alibi_id
+- suspect_id
+- alibi_location
+- date_time
+- alibi_statement
+
+---
+
+## Tools & Skills Used
+
+- SQL
+- INNER JOIN
+- Multiple Table Joins
+- Filtering with WHERE, AND, OR
+- Pattern Matching with LIKE
+- UNION ALL
+- GROUP BY
+- HAVING
+- Subqueries
+
+- Relational Data Analysis
+- Problem Solving
+- Analytical Thinking
+
+---
+
+## Methodology
+
+- Used INNER JOINs to connect related tables using suspect_id
+- Applied filters to isolate suspects matching each clue
+- Used LIKE with wildcards to search alibi text
+- Compared phone locations and alibi locations to identify inconsistencies
+- Combined multiple query results with UNION ALL
+- Used GROUP BY and HAVING COUNT(*) = 5 to find the suspect appearing in every clue result set
+
+---
+
+## SQL Analysis
+
+### 1. Suspects at the Crime Scene
+
+```sql
+SELECT suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       date_time
+FROM suspect_info
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE cell_location = 'Carnival City'
+  AND date_time = '01/13/21 17:01';
+2. Suspects with Specialist Associates
+SELECT suspect_first_name,
+       suspect_last_name,
+       associate_alias,
+       occupation,
+       relationship_to_suspect
+FROM suspect_info
+JOIN associates_info
+  ON suspect_info.suspect_id = associates_info.suspect_id
+WHERE relationship_to_suspect = 'Friend'
+  AND occupation LIKE '%Specialist%';
+3. Suspects with Matching Vehicle Description
+SELECT suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       car_model,
+       license_plate
+FROM suspect_info
+JOIN vehicle_info
+  ON suspect_info.suspect_id = vehicle_info.suspect_id
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE car_type = 'Minivan'
+  AND license_plate LIKE '%D0G';
+4. Suspicious Alibi Statements
+SELECT suspect_first_name,
+       suspect_last_name,
+       alibi_statement
+FROM suspect_info
+JOIN alibi_info
+  ON suspect_info.suspect_id = alibi_info.suspect_id
+WHERE alibi_statement LIKE '%dog%'
+   OR alibi_statement LIKE '%cotton%'
+   OR alibi_statement LIKE '%candy%';
+5. Mismatched Location Data
+SELECT suspect_info.suspect_id,
+       suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       alibi_location
+FROM suspect_info
+JOIN alibi_info
+  ON suspect_info.suspect_id = alibi_info.suspect_id
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE cell_location <> alibi_location;
+6. Final Suspect Identification
+SELECT s.suspect_id,
+       s.suspect_first_name,
+       s.suspect_last_name
+FROM suspect_info s
+JOIN (
+    SELECT suspect_id
+    FROM (
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE li.cell_location = 'Carnival City'
+          AND li.date_time = '01/13/21 17:01'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN associates_info ai
+          ON si.suspect_id = ai.suspect_id
+        WHERE ai.relationship_to_suspect = 'Friend'
+          AND ai.occupation LIKE '%Specialist%'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN vehicle_info vi
+          ON si.suspect_id = vi.suspect_id
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE vi.car_type = 'Minivan'
+          AND vi.license_plate LIKE '%D0G'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN alibi_info ai
+          ON si.suspect_id = ai.suspect_id
+        WHERE ai.alibi_statement LIKE '%dog%'
+           OR ai.alibi_statement LIKE '%cotton%'
+           OR ai.alibi_statement LIKE '%candy%'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN alibi_info ai
+          ON si.suspect_id = ai.suspect_id
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE li.cell_location <> ai.alibi_location
+    ) all_clues
+    GROUP BY suspect_id
+    HAVING COUNT(*) = 5
+) matches
+  ON s.suspect_id = matches.suspect_id;
+Key Insight
+
+The suspect identified across all clue results was Pippa Puffloon.
+
+What I Learned
+How to connect multiple related tables using joins
+How to filter records based on exact matches and partial text matches
+How to compare values across sources to detect inconsistencies
+How to use UNION ALL, GROUP BY, and HAVING to find overlap across result sets
+How to structure a SQL investigation step by step to solve a larger problem
+Note
+
+This project uses a fictional mystery dataset for educational and portfolio-building purposes.
+
+
+---
+
+# `schema.sql`
+
+```sql
+CREATE TABLE suspect_info (
+    suspect_id INTEGER PRIMARY KEY,
+    suspect_first_name TEXT,
+    suspect_last_name TEXT
+);
+
+CREATE TABLE vehicle_info (
+    suspect_id INTEGER,
+    car_type TEXT,
+    car_model TEXT,
+    license_plate TEXT
+);
+
+CREATE TABLE associates_info (
+    suspect_id INTEGER,
+    associate_alias TEXT,
+    occupation TEXT,
+    relationship_to_suspect TEXT
+);
+
+CREATE TABLE location_info (
+    suspect_id INTEGER,
+    cell_location TEXT,
+    date_time TEXT
+);
+
+CREATE TABLE alibi_info (
+    alibi_id INTEGER,
+    suspect_id INTEGER,
+    alibi_location VARCHAR(14),
+    date_time VARCHAR(14),
+    alibi_statement VARCHAR(75)
+);
+data.sql
+
+Right now, from what you pasted, I can only cleanly assemble the alibi_info portion. Here it is in the correct order:
+
+INSERT INTO alibi_info VALUES
+(12, 133309, 'Clownsburg', '01/13/21 17:01', 'I was in the middle of a job interview.'),
+(87, 129482, 'Flickerford', '01/13/21 16:20', 'I was just taking a nap.'),
+(45, 104397, 'Confettivale', '01/13/21 16:39', 'I was following a cute cat down an alley and got lost.'),
+(29, 105623, 'Mirage City', '01/13/21 18:12', 'I was learning how to juggle flaming pins for a street performance.'),
+(63, 130569, 'Carnival City', '01/13/21 17:01', 'I was eating leftover Halloween candy with my brother.'),
+(54, 122789, 'Whirlington', '01/13/21 16:59', 'I was shopping for groceries (they were out of ketchup).'),
+(71, 120034, 'Clownsburg', '01/13/21 18:41', 'I was watching a solar eclipse through my bathroom window.'),
+(36, 109842, 'Clownsburg', '01/13/21 18:01', 'I know what I was doing, and I know I was not stealing anything.'),
+(98, 135650, 'Firefly Falls', '01/13/21 15:45', 'I was trying to take a picture of a rare bird.'),
+(22, 112567, 'Tricksterville', '01/13/21 17:28', 'I was at the dentist, and I still cannot feel anything.'),
+(44, 107005, 'Confettivale', '01/13/21 16:45', 'I was taking a shower. I fell into a puddle of mud earlier.'),
+(58, 118309, 'Carnival City', '01/13/21 17:01', 'I was making homemade candy during the night'),
+(31, 136777, 'Mirage City', '01/13/21 16:05', 'I was working and that is all.'),
+(69, 126333, 'Confettivale', '01/13/21 15:59', 'I was reorganizing my sock drawer by color and fabric type.'),
+(76, 111903, 'Balloontown', '01/13/21 17:44', 'I was hanging out with my friend.'),
+(13, 106144, 'Lanternfield', '01/13/21 18:02', 'I was counting my change jar. I only had pennies.'),
+(80, 137999, 'Flickerford', '01/13/21 16:29', 'I was cleaning the toilet.'),
+(27, 100782, 'Midway Meadows', '01/13/21 16:31', 'I do not understand what you are asking.'),
+(66, 119457, 'Carnival City', '01/13/21 17:01', 'I was buying a hotdog across the street when it happened.'),
+(90, 138222, 'Whirlington', '01/13/21 17:51', 'I was taking a drive to Carnival City. Good thing I did not stick around?'),
+(19, 115634, 'Whirlington', '01/13/21 17:01', 'I stayed home because my dog was not feeling well.'),
+(35, 131200, 'Carnival City', '01/13/21 17:31', 'I was doing something important, but I cannot tell you what.'),
+(83, 108390, 'Tricksterville', '01/13/21 18:28', 'I demand an attorney!'),
+(60, 117845, 'Mirage City', '01/13/21 15:50', 'I was Facetiming my grandma the whole time this went down.'),
+(41, 127890, 'Carnival City', '01/13/21 17:01', 'I was wrapping gifts in cotton wrapping material.'),
+(73, 102584, 'Luminara', '01/13/21 17:56', 'I was eating popcorn and steak for dinner.'),
+(55, 103216, 'Luminara', '01/13/21 16:54', 'I was reading a book on how to disappear without leaving a trace.'),
+(24, 125678, 'Midway Meadows', '01/13/21 17:00', 'I was practicing my alibi.'),
+(78, 101349, 'Carnival City', '01/13/21 17:05', 'I was buying fruit at the corner store right before the incident.'),
+(99, 178932, 'Carnival City', '01/13/21 17:01', 'I was being chased by a scary dog around the block.'),
+(67, 123456, 'Balloontown', '01/13/21 15:19', 'I was just around and about.'),
+(50, 116200, 'Tricksterville', '01/13/21 18:59', 'I was home alone and my phone died, so I did not call or text anyone.'),
+(17, 121601, 'Whirlington', '01/13/21 16:17', 'I was doing my taxes, thank you very much.'),
+(42, 114859, 'Lanternfield', '01/13/21 16:58', 'I was watching a video on how to properly caramelize sugar.'),
+(59, 113478, 'Carnival City', '01/13/21 17:01', 'I was at a wrestling match, cheering for the underdog!'),
+(88, 124903, 'Firefly Falls', '01/13/21 17:01', 'I was making rainbow shirts with my family all afternoon.'),
+(30, 134008, 'Firefly Falls', '01/13/21 16:25', 'I was fixing my microwave. It works after I hit it three times with a fork.'),
+(65, 128001, 'Balloontown', '01/13/21 17:01', 'I was trying new soda flavors at the tasting booth. Want some?'),
+(77, 110276, 'Mirage City', '01/13/21 18:19', 'I was trying to train my pet lizard to bring me snacks.'),
+(21, 132745, 'Clownsburg', '01/13/21 18:00', 'I was wearing a clown mask for fun.'),
+(94, 100245, 'Carnival City', '01/13/21 17:23', 'I was burning some old letters because I ran out of firewood.'),
+(20, 564781, 'Carnival City', '01/13/21 17:01', 'I was using a cotton swab to clean out my ears.');
+queries.sql
+-- 1. Suspects at the Crime Scene
+SELECT suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       date_time
+FROM suspect_info
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE cell_location = 'Carnival City'
+  AND date_time = '01/13/21 17:01';
+
+-- 2. Suspects with Specialist Associates
+SELECT suspect_first_name,
+       suspect_last_name,
+       associate_alias,
+       occupation,
+       relationship_to_suspect
+FROM suspect_info
+JOIN associates_info
+  ON suspect_info.suspect_id = associates_info.suspect_id
+WHERE relationship_to_suspect = 'Friend'
+  AND occupation LIKE '%Specialist%';
+
+-- 3. Suspects with Matching Vehicle Description
+SELECT suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       car_model,
+       license_plate
+FROM suspect_info
+JOIN vehicle_info
+  ON suspect_info.suspect_id = vehicle_info.suspect_id
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE car_type = 'Minivan'
+  AND license_plate LIKE '%D0G';
+
+-- 4. Suspicious Alibi Statements
+SELECT suspect_first_name,
+       suspect_last_name,
+       alibi_statement
+FROM suspect_info
+JOIN alibi_info
+  ON suspect_info.suspect_id = alibi_info.suspect_id
+WHERE alibi_statement LIKE '%dog%'
+   OR alibi_statement LIKE '%cotton%'
+   OR alibi_statement LIKE '%candy%';
+
+-- 5. Mismatched Location Data
+SELECT suspect_info.suspect_id,
+       suspect_first_name,
+       suspect_last_name,
+       cell_location,
+       alibi_location
+FROM suspect_info
+JOIN alibi_info
+  ON suspect_info.suspect_id = alibi_info.suspect_id
+JOIN location_info
+  ON suspect_info.suspect_id = location_info.suspect_id
+WHERE cell_location <> alibi_location;
+
+-- 6. Final Suspect Identification
+SELECT s.suspect_id,
+       s.suspect_first_name,
+       s.suspect_last_name
+FROM suspect_info s
+JOIN (
+    SELECT suspect_id
+    FROM (
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE li.cell_location = 'Carnival City'
+          AND li.date_time = '01/13/21 17:01'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN associates_info ai
+          ON si.suspect_id = ai.suspect_id
+        WHERE ai.relationship_to_suspect = 'Friend'
+          AND ai.occupation LIKE '%Specialist%'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN vehicle_info vi
+          ON si.suspect_id = vi.suspect_id
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE vi.car_type = 'Minivan'
+          AND vi.license_plate LIKE '%D0G'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN alibi_info ai
+          ON si.suspect_id = ai.suspect_id
+        WHERE ai.alibi_statement LIKE '%dog%'
+           OR ai.alibi_statement LIKE '%cotton%'
+           OR ai.alibi_statement LIKE '%candy%'
+
+        UNION ALL
+
+        SELECT DISTINCT si.suspect_id
+        FROM suspect_info si
+        JOIN alibi_info ai
+          ON si.suspect_id = ai.suspect_id
+        JOIN location_info li
+          ON si.suspect_id = li.suspect_id
+        WHERE li.cell_location <> ai.alibi_location
+    ) all_clues
+    GROUP BY suspect_id
+    HAVING COUNT(*) = 5
+) matches
+  ON s.suspect_id = matches.suspect_id;
