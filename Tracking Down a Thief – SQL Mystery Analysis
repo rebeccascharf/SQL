@@ -94,11 +94,275 @@ This project uses a fictional database with five tables:
 
 ---
 
+## Database Schema SQL
+
+CREATE TABLE suspect_info (
+  `suspect_id` INTEGER,
+  `suspect_first_name` VARCHAR(9),
+  `suspect_last_name` VARCHAR(12),
+  `height_cm` INTEGER,
+  `age` INTEGER,
+  `eye_color` VARCHAR(5)
+);
+
+INSERT INTO suspect_info VALUES
+  (100245, 'Fizban', 'Flipwhistle', 145, 30, 'Brown'),
+  (104397, 'Mojo', 'Marizipan', 160, 61, 'Green'),
+  (109842, 'Orbin', 'Twinklejam', 181, 53, 'Blue'),
+  (114859, 'Zandri', 'Starcoil', 156, 20, 'Brown'),
+  (119457, 'Cleo', 'Charmelle', 161, 49, 'Hazel'),
+  (124903, 'Luna', 'McMarvelo', 129, 18, 'Hazel'),
+  (129482, 'Zippo', 'Bubblepop', 147, 37, 'Blue'),
+  (134008, 'Kiki', 'Tinselburst', 190, 66, 'Green'),
+  (135650, 'Twizzle', 'Zestle', 165, 23, 'Brown'),
+  (130569, 'Jinxley', 'Whizaroo', 180, 71, 'Blue'),
+  (125678, 'Marnie', 'Silktoss', 157, 29, 'Brown'),
+  (120034, 'Fennie', 'Doodle', 163, 22, 'Green'),
+  (115634, 'Pippa', 'Puffloon', 169, 21, 'Hazel'),
+  (110276, 'Snazzy', 'Tinkerblast', 165, 30, 'Gray'),
+  (105623, 'Taffi', 'Dimplecharm', 186, 50, 'Brown'),
+  (100782, 'Brizzo', 'Blazegiggle', 138, 45, 'Brown'),
+  (101349, 'Kazoo', 'Zestibop', 168, 19, 'Blue'),
+  (106144, 'Tuli', 'Fanciboom', 177, 17, 'Hazel'),
+  (111903, 'Zamira', 'Confettique', 161, 80, 'Brown'),
+  (116200, 'Dexi', 'Poppino', 155, 28, 'Green'),
+  (121601, 'Muffin', 'Jamborina', 184, 20, 'Blue'),
+  (126333, 'Groppo', 'Bouncette', 162, 19, 'Blue'),
+  (131200, 'Lurko', 'Featherloop', 147, 33, 'Brown'),
+  (136777, 'Karnie', 'Ribbonflare', 191, 51, 'Gray'),
+  (102584, 'Quibble', 'Gigglewand', 182, 42, 'Blue'),
+  (107005, 'Dazzlo', 'Spindleflick', 142, 29, 'Hazel'),
+  (112567, 'Velo', 'Sparklenose', 159, 49, 'Green'),
+  (117845, 'Zaffina', 'Crinklestar', 144, 68, 'Brown'),
+  (122789, 'Trixa', 'Swizzlefizz', 134, 21, 'Brown'),
+  (127890, 'Flint', 'Flipjack', 178, 30, 'Brown'),
+  (132745, 'Seraphine', 'Starcrash', 170, 23, 'Green'),
+  (137999, 'Echo', 'Moonwhirl', 138, 32, 'Blue'),
+  (103216, 'Snorbo', 'Wobblewand', 143, 71, 'Green'),
+  (108390, 'Mimzy', 'Whirlicue', 182, 46, 'Brown'),
+  (113478, 'Nella', 'Jangles', 170, 25, 'Blue'),
+  (118309, 'Rumi', 'Calaminto', 167, 39, 'Hazel'),
+  (123456, 'Waldo', 'Dazzleplume', 165, 42, 'Brown'),
+  (128001, 'Bamble', 'Glimmerpop', 176, 19, 'Blue'),
+  (133309, 'Nixie', 'Jinglebuzz', 160, 57, 'Brown'),
+  (138222, 'Jiggy', 'Lanternelle', 180, 18, 'Blue');
+ 
+ 
+ 
+CREATE TABLE vehicle_info (
+  `vehicle_id` INTEGER,
+  `suspect_id` INTEGER,
+  `license_plate` VARCHAR(8),
+  `car_model` VARCHAR(22),
+  `car_type` VARCHAR(13)
+);
+
+INSERT INTO vehicle_info VALUES
+  (1, 130569, '19FED0G', 'Kia Carnival', 'Minivan'),
+  (2, 100245, 'QT719WE', 'Toyota Camry', 'Sedan'),
+  (3, 101349, 'BGR9814', 'Subaru Outback', 'Station Wagon'),
+  (4, 126333, '374TDOG', '2019 Chrysler Pacifica', 'Minivan'),
+  (5, 120034, 'KJD4382', 'Dodge Charger', 'Sedan'),
+  (6, 116200, 'ME21CTF', 'Toyota 4Runner', 'SUV'),
+  (7, 134008, 'LU09HYN', 'Chevrolet Camaro', 'Convertible'),
+  (8, 115634, 'XKW3D0G', 'Kia Carnival', 'Minivan'),
+  (9, 121601, 'DA391RZ', 'Toyota Tacoma', 'Truck'),
+  (10, 125678, '932WNV', 'Toyota Corolla', 'Hatchback'),
+  (11, 105623, 'AT18LUM', 'Volvo V60', 'Station Wagon'),
+  (12, 102584, '913WPK', 'Ford Mustang', 'Convertible'),
+  (13, 122789, 'BR94FTT', 'Chevrolet Silverado', 'Truck'),
+  (14, 137999, 'BE387LM', 'Ford Explorer', 'SUV'),
+  (15, 124903, 'FJ658D0G', 'Chrysler Voyager', 'Minivan'),
+  (16, 108390, 'GB13REA', 'Honda CR-V', 'Crossover'),
+  (17, 111903, 'NZX4901', 'Honda Accord', 'Sedan'),
+  (18, 135650, 'ZY509LX', 'Chevrolet Silverado', 'Truck'),
+  (19, 118309, 'VN10DOG', 'Kia Carnival', 'Minivan'),
+  (20, 138222, 'IT315RP', 'Honda Civic', 'Hatchback'),
+  (21, 128001, 'LKM2021', 'Hyundai Tucson', 'Crossover'),
+  (22, 107005, '439LMF2', 'Porsche 718 Boxster', 'Convertible'),
+  (23, 136777, '801MBX', 'Ford Explorer', 'SUV'),
+  (24, 114859, 'QTR8823', 'Dodge Charger', 'Sedan'),
+  (25, 103216, 'CD08MKR', 'Chevrolet Camaro', 'Convertible'),
+  (26, 131200, 'SE11BJU', 'Ford Mustang', 'Convertible'),
+  (27, 100782, 'PA84D0G', '2019 Chrysler Pacifica', 'Minivan'),
+  (28, 132745, '280BNF', 'Chevrolet Silverado', 'Truck'),
+  (29, 117845, '781ZXB', 'Toyota Tacoma', 'Truck'),
+  (30, 113478, 'FR749QG', 'Subaru Outback', 'Station Wagon'),
+  (31, 119457, 'RTN2D0G', 'Chrysler Voyager', 'Minivan'),
+  (32, 112567, 'SW16KLD', 'Hyundai Tucson', 'Crossover'),
+  (33, 123456, 'ES772HJ', 'Toyota 4Runner', 'SUV'),
+  (34, 104397, 'CRD9284', 'Honda CR-V', 'Crossover'),
+  (35, 110276, 'NL11VSG', 'Toyota Camry', 'Sedan'),
+  (36, 127890, '653WD0G', '2019 Chrysler Pacifica', 'Minivan'),
+  (37, 106144, 'FI130NK', 'Honda Civic', 'Hatchback'),
+  (38, 133309, 'DE20VEX', 'Toyota 4Runner', 'SUV'),
+  (39, 129482, '564JMP', 'Chevrolet Camaro', 'Convertible'),
+  (40, 109842, 'MPT6630', 'Kia Carnival', 'Minivan'),
+  (41, 184568, 'UVP9D0G', 'Chrysler Voyager', 'Minivan'),
+  (42, 123457, 'CAT2DOG', 'Toyota Sienna', 'Minivan'); 
+  
+  
+
+CREATE TABLE associates_info (
+  `associate_id` INTEGER,
+  `suspect_id` INTEGER,
+  `associate_alias` VARCHAR(15),
+  `relationship_to_suspect` VARCHAR(13),
+  `occupation` VARCHAR(29)
+);
+
+INSERT INTO associates_info VALUES
+  (173, 114859, 'Canva', 'Acquaintances', 'Marketing Manager'),
+  (581, 101349, NULL, 'Friend', 'Behavioral Health Specialist'),
+  (264, 104397, 'Dia', 'Employer', 'Geologist'),
+  (927, 117845, 'Clown', 'Neighbor', 'Financial Analyst'),
+  (348, 127890, 'Velvet', 'Friend', 'Marketing Specialist'),
+  (765, 103216, NULL, 'Parent', 'Librarian'),
+  (118, 105623, 'Jet', 'Coworker', 'Plumber'),
+  (432, 110276, 'Pikachu', 'Acquaintances', 'Electrician'),
+  (839, 128001, NULL, 'Sibling', 'Software Developer'),
+  (295, 137999, NULL, 'Friend', 'Journalist'),
+  (611, 126333, 'Trixie', 'Parent', 'Sales Representative'),
+  (713, 108390, 'Madame Mischief', 'Coworker', 'Graphic Designer'),
+  (508, 107005, 'Raven', 'Coworker', 'UX Designer'),
+  (301, 113478, 'Prowler', 'Friend', 'Talent Acquisition Specialist'),
+  (122, 136777, 'Cod', 'Acquaintances', 'Carpenter'),
+  (679, 118309, 'DJ', 'Grandparent', 'Software Developer'),
+  (249, 102584, NULL, 'Friend', 'Firefighter'),
+  (487, 134008, 'Penny', 'Employer', 'Journalist'),
+  (362, 112567, 'Jenkins', 'Mentor', 'Systems Administrator'),
+  (199, 109842, NULL, 'Friend', 'Environmental Specialist'),
+  (700, 130569, 'Pinstripe', 'Client', 'School Counselor'),
+  (847, 123456, 'Sir', 'Coworker', 'Social Worker'),
+  (365, 124903, 'Domino', 'Acquaintances', 'Instructional Designer'),
+  (923, 133309, 'Ace', 'Acquaintances', 'Physical Therapist'),
+  (154, 100782, 'Cookie', 'Peer', 'Teacher'),
+  (782, 100245, 'Boomer', 'Neighbor', 'Lab Technician'),
+  (456, 116200, NULL, 'Client', 'Paramedic'),
+  (631, 115634, 'Butterfingers', 'Friend', 'Cybersecurity Specialist'),
+  (219, 120034, 'Mr. Hollywood', 'Grandparent', 'Film Editor'),
+  (807, 152798, 'Blondie', 'Friend', 'Support Specialist'), 
+  (389, 135650, 'Captain', 'Mentor', 'Police Officer'),
+  (874, 111903, NULL, 'Sibling', 'UX Designer'),
+  (142, 106144, NULL, 'Parent', 'Chemist'),
+  (903, 121601, 'Crow', 'Acquaintances', 'Copywriter'),
+  (176, 138222, 'Glassy', 'Sibling', 'Welder'),
+  (341, 125678, 'Swiper', 'Acquaintances', 'Author'),
+  (652, 119457, 'Baron', 'Friend', 'Student Support Specialist'),
+  (798, 132745, 'Queenie', 'Friend', 'Illustrator'),
+  (524, 129482, NULL, 'Neighbor', 'Social Worker'),
+  (289, 131200, 'Nova', 'Cousin', 'Carpenter'),
+  (670, 122789, 'Ghost', 'Employer', 'Librarian'),
+  (111, 578965, 'Nobody', 'Friend', 'Computer Support Specialist'); 
+  
+  CREATE TABLE location_info (
+  `suspect_id` INTEGER,
+  `cell_location` VARCHAR(14),
+  `date_time` VARCHAR(14)
+);
+  
+ INSERT INTO location_info VALUES
+  (133309,  'Clownsburg',  '01/13/21 17:01'),
+(129482,  'Lanternfield',  '01/13/21 16:20'),
+(104397,  'Confettivale',  '01/13/21 16:39'),
+(105623,  'Mirage City',  '01/13/21 18:12'),
+(130569,  'Carnival City',  '01/13/21 17:01'),
+(122789,  'Whirlington',  '01/13/21 16:59'),
+(120034,  'Clownsburg',  '01/13/21 18:41'),
+(109842,  'Carnival City',  '01/13/21 18:01'),
+(135650,  'Firefly Falls',  '01/13/21 15:45'),
+(112567,  'Tricksterville',  '01/13/21 17:28'),
+(107005,  'Flickerford',  '01/13/21 16:45'),
+(118309,  'Carnival City',  '01/13/21 17:01'),
+(136777,  'Mirage City',  '01/13/21 16:05'),
+(126333,  'Confettivale',  '01/13/21 15:59'),
+(111903,  'Balloontown',  '01/13/21 17:44'),
+(106144,  'Lanternfield',  '01/13/21 18:02'),
+(137999,  'Flickerford',  '01/13/21 16:29'),
+(100782,  'Midway Meadows',  '01/13/21 16:31'),
+(119457,  'Carnival City',  '01/13/21 17:01'),
+(138222,  'Whirlington',  '01/13/21 17:51'),
+(115634,  'Carnival City',  '01/13/21 17:01'),
+(131200,  'Balloontown',  '01/13/21 17:31'),
+(108390,  'Tricksterville',  '01/13/21 18:28'),
+(117845,  'Mirage City',  '01/13/21 15:50'),
+(127890,  'Carnival City',  '01/13/21 17:01'),
+(102584,  'Luminara',  '01/13/21 17:56'),
+(103216,  'Luminara',  '01/13/21 16:54'),
+(125678,  'Midway Meadows',  '01/13/21 17:00'),
+(101349,  'Carnival City',  '01/13/21 17:05'),
+(178932,  'Carnival City',  '01/13/21 17:01'),
+(123456,  'Balloontown',  '01/13/21 15:19'),
+(116200,  'Tricksterville',  '01/13/21 18:59'),
+(121601,  'Whirlington',  '01/13/21 16:17'),
+(114859,  'Lanternfield',  '01/13/21 16:58'),
+(113478,  'Carnival City',  '01/13/21 17:01'),
+(124903,  'Whirlington',  '01/13/21 17:01'),
+(134008,  'Firefly Falls',  '01/13/21 16:25'),
+(128001,  'Balloontown',  '01/13/21 17:01'),
+(110276,  'Mirage City',  '01/13/21 18:19'),
+(132745,  'Clownsburg',  '01/13/21 18:00'),
+(100245,  'Carnival City',  '01/13/21 17:23'),
+(564781,  'Carnival City',  '01/13/21 17:01');
+
+
+CREATE TABLE alibi_info (
+  `alibi_id` INTEGER,
+  `suspect_id` INTEGER,
+  `alibi_location` VARCHAR(14),
+  `date_time` VARCHAR(14),
+  `alibi_statement` VARCHAR(75)
+);
+
+INSERT INTO alibi_info VALUES
+
+  (12, 133309, 'Clownsburg', '01/13/21 17:01', 'I was in the middle of a job interview.'),
+      (87, 129482, 'Flickerford', '01/13/21 16:20', 'I was just taking a nap.'),
+      (45, 104397, 'Confettivale', '01/13/21 16:39', 'I was following a cute cat down an alley and got lost.'),
+      (29, 105623, 'Mirage City', '01/13/21 18:12', 'I was learning how to juggle flaming pins for a street performance.'),
+      (63, 130569, 'Carnival City', '01/13/21 17:01', 'I was eating leftover Halloween candy with my brother.'),
+      (54, 122789, 'Whirlington', '01/13/21 16:59', 'I was shopping for groceries (they were out of ketchup).'),
+      (71, 120034, 'Clownsburg', '01/13/21 18:41', 'I was watching a solar eclipse through my bathroom window.'),
+      (36, 109842, 'Clownsburg', '01/13/21 18:01', 'I know what I was doing, and I know I was not stealing anything.'),
+      (98, 135650, 'Firefly Falls', '01/13/21 15:45', 'I was trying to take a picture of a rare bird.'),
+      (22, 112567, 'Tricksterville', '01/13/21 17:28', 'I was at the dentist, and I still cannot feel anything.'),
+      (44, 107005, 'Confettivale', '01/13/21 16:45', 'I was taking a shower. I fell into a puddle of mud earlier.'),
+      (58, 118309, 'Carnival City', '01/13/21 17:01', 'I was making homemade candy during the night'),
+      (31, 136777, 'Mirage City', '01/13/21 16:05', 'I was working and that is all.'),
+      (69, 126333, 'Confettivale', '01/13/21 15:59', 'I was reorganizing my sock drawer by color and fabric type.'),
+      (76, 111903, 'Balloontown', '01/13/21 17:44', 'I was hanging out with my friend.'),
+      (13, 106144, 'Lanternfield', '01/13/21 18:02', 'I was counting my change jar. I only had pennies.'),
+      (80, 137999, 'Flickerford', '01/13/21 16:29', 'I was cleaning the toilet.'),
+      (27, 100782, 'Midway Meadows', '01/13/21 16:31', 'I do not understand what you are asking.'),
+      (66, 119457, 'Carnival City', '01/13/21 17:01', 'I was buying a hotdog across the street when it happened.'),
+      (90, 138222, 'Whirlington', '01/13/21 17:51', 'I was taking a drive to Carnival City. Good thing I did not stick around?'),
+      (19, 115634, 'Whirlington', '01/13/21 17:01', 'I stayed home because my dog was not feeling well.'),
+      (35, 131200, 'Carnival City', '01/13/21 17:31', 'I was doing something important, but I cannot tell you what.'),
+      (83, 108390, 'Tricksterville', '01/13/21 18:28', 'I demand an attorney!'),
+      (60, 117845, 'Mirage City', '01/13/21 15:50', 'I was Facetiming my grandma the whole time this went down.'),
+      (41, 127890, 'Carnival City', '01/13/21 17:01', 'I was wrapping gifts in cotton wrapping material.'),
+      (73, 102584, 'Luminara', '01/13/21 17:56', 'I was eating popcorn and steak for dinner.'),
+      (55, 103216, 'Luminara', '01/13/21 16:54', 'I was reading a book on how to disappear without leaving a trace.'),
+      (24, 125678, 'Midway Meadows', '01/13/21 17:00', 'I was practicing my alibi.'),
+      (78, 101349, 'Carnival City', '01/13/21 17:05', 'I was buying fruit at the corner store right before the incident.'),
+      (99, 178932, 'Carnival City', '01/13/21 17:01', 'I was being chased by a scary dog around the block.'),
+      (67, 123456, 'Balloontown', '01/13/21 15:19', 'I was just around and about.'),
+      (50, 116200, 'Tricksterville', '01/13/21 18:59', 'I was home alone and my phone died, so I did not call or text anyone.'),
+      (17, 121601, 'Whirlington', '01/13/21 16:17', 'I was doing my taxes, thank you very much.'),
+      (42, 114859, 'Lanternfield', '01/13/21 16:58', 'I was watching a video on how to properly caramelize sugar.'),
+      (59, 113478, 'Carnival City', '01/13/21 17:01', 'I was at a wrestling match, cheering for the underdog!'),
+      (88, 124903, 'Firefly Falls', '01/13/21 17:01', 'I was making rainbow shirts with my family all afternoon.'),
+      (30, 134008, 'Firefly Falls', '01/13/21 16:25', 'I was fixing my microwave. It works after I hit it three times with a fork.'),
+      (65, 128001, 'Balloontown', '01/13/21 17:01', 'I was trying new soda flavors at the tasting booth. Want some?'),
+      (77, 110276, 'Mirage City', '01/13/21 18:19', 'I was trying to train my pet lizard to bring me snacks.'),
+      (21, 132745, 'Clownsburg', '01/13/21 18:00', 'I was wearing a clown mask for fun.'),
+      (94, 100245, 'Carnival City', '01/13/21 17:23', 'I was burning some old letters because I ran out of firewood.'),
+      (20, 564781, 'Carnival City', '01/13/21 17:01', 'I was using a cotton swab to clean out my ears.');
+
 ## SQL Analysis
 
 ### 1. Suspects at the Crime Scene
 
-```sql
 SELECT suspect_first_name,
        suspect_last_name,
        cell_location,
@@ -108,7 +372,9 @@ JOIN location_info
   ON suspect_info.suspect_id = location_info.suspect_id
 WHERE cell_location = 'Carnival City'
   AND date_time = '01/13/21 17:01';
-2. Suspects with Specialist Associates
+
+### 2. Suspects with Specialist Associates
+
 SELECT suspect_first_name,
        suspect_last_name,
        associate_alias,
@@ -119,7 +385,9 @@ JOIN associates_info
   ON suspect_info.suspect_id = associates_info.suspect_id
 WHERE relationship_to_suspect = 'Friend'
   AND occupation LIKE '%Specialist%';
-3. Suspects with Matching Vehicle Description
+
+### 3. Suspects with Matching Vehicle Description
+
 SELECT suspect_first_name,
        suspect_last_name,
        cell_location,
@@ -132,7 +400,9 @@ JOIN location_info
   ON suspect_info.suspect_id = location_info.suspect_id
 WHERE car_type = 'Minivan'
   AND license_plate LIKE '%D0G';
-4. Suspicious Alibi Statements
+
+### 4. Suspicious Alibi Statements
+
 SELECT suspect_first_name,
        suspect_last_name,
        alibi_statement
@@ -142,7 +412,9 @@ JOIN alibi_info
 WHERE alibi_statement LIKE '%dog%'
    OR alibi_statement LIKE '%cotton%'
    OR alibi_statement LIKE '%candy%';
-5. Mismatched Location Data
+
+### 5. Mismatched Location Data
+
 SELECT suspect_info.suspect_id,
        suspect_first_name,
        suspect_last_name,
@@ -154,7 +426,9 @@ JOIN alibi_info
 JOIN location_info
   ON suspect_info.suspect_id = location_info.suspect_id
 WHERE cell_location <> alibi_location;
-6. Final Suspect Identification
+
+### 6. Final Suspect Identification
+
 SELECT s.suspect_id,
        s.suspect_first_name,
        s.suspect_last_name
@@ -215,222 +489,13 @@ JOIN (
   ON s.suspect_id = matches.suspect_id;
 Key Insight
 
-The suspect identified across all clue results was Pippa Puffloon.
+## What I Learned
+-How to connect multiple related tables using joins
+-How to filter records based on exact matches and partial text matches
+-How to compare values across sources to detect inconsistencies
+-How to use UNION ALL, GROUP BY, and HAVING to find overlap across result sets
+-How to structure a SQL investigation step by step to solve a larger problem
 
-What I Learned
-How to connect multiple related tables using joins
-How to filter records based on exact matches and partial text matches
-How to compare values across sources to detect inconsistencies
-How to use UNION ALL, GROUP BY, and HAVING to find overlap across result sets
-How to structure a SQL investigation step by step to solve a larger problem
-Note
+## Note
 
 This project uses a fictional mystery dataset for educational and portfolio-building purposes.
-
-
----
-
-# `schema.sql`
-
-```sql
-CREATE TABLE suspect_info (
-    suspect_id INTEGER PRIMARY KEY,
-    suspect_first_name TEXT,
-    suspect_last_name TEXT
-);
-
-CREATE TABLE vehicle_info (
-    suspect_id INTEGER,
-    car_type TEXT,
-    car_model TEXT,
-    license_plate TEXT
-);
-
-CREATE TABLE associates_info (
-    suspect_id INTEGER,
-    associate_alias TEXT,
-    occupation TEXT,
-    relationship_to_suspect TEXT
-);
-
-CREATE TABLE location_info (
-    suspect_id INTEGER,
-    cell_location TEXT,
-    date_time TEXT
-);
-
-CREATE TABLE alibi_info (
-    alibi_id INTEGER,
-    suspect_id INTEGER,
-    alibi_location VARCHAR(14),
-    date_time VARCHAR(14),
-    alibi_statement VARCHAR(75)
-);
-data.sql
-
-Right now, from what you pasted, I can only cleanly assemble the alibi_info portion. Here it is in the correct order:
-
-INSERT INTO alibi_info VALUES
-(12, 133309, 'Clownsburg', '01/13/21 17:01', 'I was in the middle of a job interview.'),
-(87, 129482, 'Flickerford', '01/13/21 16:20', 'I was just taking a nap.'),
-(45, 104397, 'Confettivale', '01/13/21 16:39', 'I was following a cute cat down an alley and got lost.'),
-(29, 105623, 'Mirage City', '01/13/21 18:12', 'I was learning how to juggle flaming pins for a street performance.'),
-(63, 130569, 'Carnival City', '01/13/21 17:01', 'I was eating leftover Halloween candy with my brother.'),
-(54, 122789, 'Whirlington', '01/13/21 16:59', 'I was shopping for groceries (they were out of ketchup).'),
-(71, 120034, 'Clownsburg', '01/13/21 18:41', 'I was watching a solar eclipse through my bathroom window.'),
-(36, 109842, 'Clownsburg', '01/13/21 18:01', 'I know what I was doing, and I know I was not stealing anything.'),
-(98, 135650, 'Firefly Falls', '01/13/21 15:45', 'I was trying to take a picture of a rare bird.'),
-(22, 112567, 'Tricksterville', '01/13/21 17:28', 'I was at the dentist, and I still cannot feel anything.'),
-(44, 107005, 'Confettivale', '01/13/21 16:45', 'I was taking a shower. I fell into a puddle of mud earlier.'),
-(58, 118309, 'Carnival City', '01/13/21 17:01', 'I was making homemade candy during the night'),
-(31, 136777, 'Mirage City', '01/13/21 16:05', 'I was working and that is all.'),
-(69, 126333, 'Confettivale', '01/13/21 15:59', 'I was reorganizing my sock drawer by color and fabric type.'),
-(76, 111903, 'Balloontown', '01/13/21 17:44', 'I was hanging out with my friend.'),
-(13, 106144, 'Lanternfield', '01/13/21 18:02', 'I was counting my change jar. I only had pennies.'),
-(80, 137999, 'Flickerford', '01/13/21 16:29', 'I was cleaning the toilet.'),
-(27, 100782, 'Midway Meadows', '01/13/21 16:31', 'I do not understand what you are asking.'),
-(66, 119457, 'Carnival City', '01/13/21 17:01', 'I was buying a hotdog across the street when it happened.'),
-(90, 138222, 'Whirlington', '01/13/21 17:51', 'I was taking a drive to Carnival City. Good thing I did not stick around?'),
-(19, 115634, 'Whirlington', '01/13/21 17:01', 'I stayed home because my dog was not feeling well.'),
-(35, 131200, 'Carnival City', '01/13/21 17:31', 'I was doing something important, but I cannot tell you what.'),
-(83, 108390, 'Tricksterville', '01/13/21 18:28', 'I demand an attorney!'),
-(60, 117845, 'Mirage City', '01/13/21 15:50', 'I was Facetiming my grandma the whole time this went down.'),
-(41, 127890, 'Carnival City', '01/13/21 17:01', 'I was wrapping gifts in cotton wrapping material.'),
-(73, 102584, 'Luminara', '01/13/21 17:56', 'I was eating popcorn and steak for dinner.'),
-(55, 103216, 'Luminara', '01/13/21 16:54', 'I was reading a book on how to disappear without leaving a trace.'),
-(24, 125678, 'Midway Meadows', '01/13/21 17:00', 'I was practicing my alibi.'),
-(78, 101349, 'Carnival City', '01/13/21 17:05', 'I was buying fruit at the corner store right before the incident.'),
-(99, 178932, 'Carnival City', '01/13/21 17:01', 'I was being chased by a scary dog around the block.'),
-(67, 123456, 'Balloontown', '01/13/21 15:19', 'I was just around and about.'),
-(50, 116200, 'Tricksterville', '01/13/21 18:59', 'I was home alone and my phone died, so I did not call or text anyone.'),
-(17, 121601, 'Whirlington', '01/13/21 16:17', 'I was doing my taxes, thank you very much.'),
-(42, 114859, 'Lanternfield', '01/13/21 16:58', 'I was watching a video on how to properly caramelize sugar.'),
-(59, 113478, 'Carnival City', '01/13/21 17:01', 'I was at a wrestling match, cheering for the underdog!'),
-(88, 124903, 'Firefly Falls', '01/13/21 17:01', 'I was making rainbow shirts with my family all afternoon.'),
-(30, 134008, 'Firefly Falls', '01/13/21 16:25', 'I was fixing my microwave. It works after I hit it three times with a fork.'),
-(65, 128001, 'Balloontown', '01/13/21 17:01', 'I was trying new soda flavors at the tasting booth. Want some?'),
-(77, 110276, 'Mirage City', '01/13/21 18:19', 'I was trying to train my pet lizard to bring me snacks.'),
-(21, 132745, 'Clownsburg', '01/13/21 18:00', 'I was wearing a clown mask for fun.'),
-(94, 100245, 'Carnival City', '01/13/21 17:23', 'I was burning some old letters because I ran out of firewood.'),
-(20, 564781, 'Carnival City', '01/13/21 17:01', 'I was using a cotton swab to clean out my ears.');
-queries.sql
--- 1. Suspects at the Crime Scene
-SELECT suspect_first_name,
-       suspect_last_name,
-       cell_location,
-       date_time
-FROM suspect_info
-JOIN location_info
-  ON suspect_info.suspect_id = location_info.suspect_id
-WHERE cell_location = 'Carnival City'
-  AND date_time = '01/13/21 17:01';
-
--- 2. Suspects with Specialist Associates
-SELECT suspect_first_name,
-       suspect_last_name,
-       associate_alias,
-       occupation,
-       relationship_to_suspect
-FROM suspect_info
-JOIN associates_info
-  ON suspect_info.suspect_id = associates_info.suspect_id
-WHERE relationship_to_suspect = 'Friend'
-  AND occupation LIKE '%Specialist%';
-
--- 3. Suspects with Matching Vehicle Description
-SELECT suspect_first_name,
-       suspect_last_name,
-       cell_location,
-       car_model,
-       license_plate
-FROM suspect_info
-JOIN vehicle_info
-  ON suspect_info.suspect_id = vehicle_info.suspect_id
-JOIN location_info
-  ON suspect_info.suspect_id = location_info.suspect_id
-WHERE car_type = 'Minivan'
-  AND license_plate LIKE '%D0G';
-
--- 4. Suspicious Alibi Statements
-SELECT suspect_first_name,
-       suspect_last_name,
-       alibi_statement
-FROM suspect_info
-JOIN alibi_info
-  ON suspect_info.suspect_id = alibi_info.suspect_id
-WHERE alibi_statement LIKE '%dog%'
-   OR alibi_statement LIKE '%cotton%'
-   OR alibi_statement LIKE '%candy%';
-
--- 5. Mismatched Location Data
-SELECT suspect_info.suspect_id,
-       suspect_first_name,
-       suspect_last_name,
-       cell_location,
-       alibi_location
-FROM suspect_info
-JOIN alibi_info
-  ON suspect_info.suspect_id = alibi_info.suspect_id
-JOIN location_info
-  ON suspect_info.suspect_id = location_info.suspect_id
-WHERE cell_location <> alibi_location;
-
--- 6. Final Suspect Identification
-SELECT s.suspect_id,
-       s.suspect_first_name,
-       s.suspect_last_name
-FROM suspect_info s
-JOIN (
-    SELECT suspect_id
-    FROM (
-        SELECT DISTINCT si.suspect_id
-        FROM suspect_info si
-        JOIN location_info li
-          ON si.suspect_id = li.suspect_id
-        WHERE li.cell_location = 'Carnival City'
-          AND li.date_time = '01/13/21 17:01'
-
-        UNION ALL
-
-        SELECT DISTINCT si.suspect_id
-        FROM suspect_info si
-        JOIN associates_info ai
-          ON si.suspect_id = ai.suspect_id
-        WHERE ai.relationship_to_suspect = 'Friend'
-          AND ai.occupation LIKE '%Specialist%'
-
-        UNION ALL
-
-        SELECT DISTINCT si.suspect_id
-        FROM suspect_info si
-        JOIN vehicle_info vi
-          ON si.suspect_id = vi.suspect_id
-        JOIN location_info li
-          ON si.suspect_id = li.suspect_id
-        WHERE vi.car_type = 'Minivan'
-          AND vi.license_plate LIKE '%D0G'
-
-        UNION ALL
-
-        SELECT DISTINCT si.suspect_id
-        FROM suspect_info si
-        JOIN alibi_info ai
-          ON si.suspect_id = ai.suspect_id
-        WHERE ai.alibi_statement LIKE '%dog%'
-           OR ai.alibi_statement LIKE '%cotton%'
-           OR ai.alibi_statement LIKE '%candy%'
-
-        UNION ALL
-
-        SELECT DISTINCT si.suspect_id
-        FROM suspect_info si
-        JOIN alibi_info ai
-          ON si.suspect_id = ai.suspect_id
-        JOIN location_info li
-          ON si.suspect_id = li.suspect_id
-        WHERE li.cell_location <> ai.alibi_location
-    ) all_clues
-    GROUP BY suspect_id
-    HAVING COUNT(*) = 5
-) matches
-  ON s.suspect_id = matches.suspect_id;
