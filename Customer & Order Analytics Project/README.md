@@ -156,7 +156,6 @@ LEFT JOIN BIT_DB.customers cust
 WHERE feb.quantity > 2
   AND LENGTH(feb.orderid) = 6
   AND feb.orderid <> 'Order ID';
-```
 
 ## Key Skills Demonstrated
 
@@ -189,6 +188,8 @@ To expand this project, I could:
 ## Note
 
 This project uses a sample dataset for educational and portfolio-building purposes. It is designed to demonstrate practical SQL skills used in sales, customer, and revenue analysis.
+
+```
 
 ![Query 1](../query1.jpg)
 ![Query 2](../query2.jpg)
