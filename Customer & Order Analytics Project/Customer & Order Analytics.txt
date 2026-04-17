@@ -100,9 +100,6 @@ FROM BIT_DB.JanSales
 WHERE LENGTH(orderid) = 6
   AND orderid <> 'Order ID';
 
-![Query 1](../query1.jpg)
-
-
 -- 2. How many of those January orders were for an iPhone?
 SELECT COUNT(DISTINCT orderid) AS january_iphone_orders
 FROM BIT_DB.JanSales
