@@ -156,6 +156,7 @@ LEFT JOIN BIT_DB.customers cust
 WHERE feb.quantity > 2
   AND LENGTH(feb.orderid) = 6
   AND feb.orderid <> 'Order ID';
+```
 
 ## Key Skills Demonstrated
 
