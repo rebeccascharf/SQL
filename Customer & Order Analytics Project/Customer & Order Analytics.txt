@@ -136,8 +136,7 @@ FROM BIT_DB.JanSales
 GROUP BY product, price
 ORDER BY revenue DESC;
 
--- 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101,
--- how many of each were sold, and what was the total revenue?
+-- 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?
 SELECT product,
        SUM(quantity) AS units_sold,
        SUM(quantity) * price AS revenue
@@ -146,8 +145,7 @@ WHERE location = '548 Lincoln St, Seattle, WA 98101'
 GROUP BY product, price
 ORDER BY revenue DESC;
 
--- 7. How many customers ordered more than 2 products at a time in February,
--- and what was the average amount spent for those customers?
+-- 7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers?
 SELECT COUNT(DISTINCT cust.acctnum) AS customer_count,
        AVG(feb.quantity * feb.price) AS avg_amount_spent
 FROM BIT_DB.FebSales feb
@@ -156,6 +154,32 @@ LEFT JOIN BIT_DB.customers cust
 WHERE feb.quantity > 2
   AND LENGTH(feb.orderid) = 6
   AND feb.orderid <> 'Order ID';
+
+## Date & Time-Based Analysis
+
+-- To further explore purchasing behavior, I analyzed order activity based on specific timestamps and date ranges.
+
+-- 8. Identify the location of an order placed at a specific time
+SELECT location
+FROM BIT_DB.FebSales
+WHERE orderdate = '02/18/19 01:35';
+
+-- 9. Calculate total quantity of items sold on a specific day
+SELECT SUM(quantity)
+FROM BIT_DB.FebSales
+WHERE orderdate LIKE '02/18/19%';
+
+-- 10. Retrieve all order timestamps within a defined date range
+SELECT orderdate
+FROM BIT_DB.FebSales
+WHERE orderdate BETWEEN '02/13/19 00:00' AND '02/18/19 00:00';
+
+## Insight
+
+-Specific timestamps can be used to trace individual transactions and their locations
+-Date filtering allows aggregation of daily sales performance
+-Using LIKE with dates enables flexible grouping when time data is included in the field
+--BETWEEN helps analyze trends across a defined time window
 ```
 
 ## Key Skills Demonstrated
