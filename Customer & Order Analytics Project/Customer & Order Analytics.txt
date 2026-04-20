@@ -179,7 +179,7 @@ WHERE orderdate BETWEEN '02/13/19 00:00' AND '02/18/19 00:00';
 -Specific timestamps can be used to trace individual transactions and their locations
 -Date filtering allows aggregation of daily sales performance
 -Using LIKE with dates enables flexible grouping when time data is included in the field
---BETWEEN helps analyze trends across a defined time window
+-BETWEEN helps analyze trends across a defined time window
 ```
 
 ## Key Skills Demonstrated
