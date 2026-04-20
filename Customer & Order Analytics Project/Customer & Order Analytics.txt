@@ -182,6 +182,58 @@ WHERE orderdate BETWEEN '02/13/19 00:00' AND '02/18/19 00:00';
 -BETWEEN helps analyze trends across a defined time window
 ```
 
+---
+
+## Additional Analysis
+
+```sql
+-- 11. How many of each type of headphone were sold in February? In other words, what is the sum of the quantity of products sold that have “headphones” in the name from the February dataset? Group the results by product.
+
+SELECT SUM(Quantity), Product
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%Headphones%'
+AND length(orderid) = 6
+AND orderid <> 'Order ID'
+GROUP BY Product;
+
+-- 12. What was the average amount spent per account in February? In other words, what is the average amount spent / number of accounts, not the amount spent by each account.
+
+SELECT sum(quantity*price)/count(cust.acctnum)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+
+SELECT avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+
+-- 13. Find order ids from Georgia (GA) where the order has an average price greater than $1,000. Only find orders from dates beginning with ‘04/1’. Assume that the dates are stored in the MM/DD/YY HH:MM format.
+
+SELECT orderID
+FROM BIT_DB.AprSales
+WHERE orderdate LIKE '04/1%'
+AND location LIKE '%GA%'
+AND length(orderid) = 6
+AND orderid <> 'Order ID'
+GROUP BY orderID
+HAVING AVG(price) > 1000;
+
+-- 14. Which product brought in the most revenue in January and how much revenue did it bring in total? In other words, show the one product that generated the most revenue (revenue being equivalent to quantity of an item multiplied by the item’s price).
+
+SELECT product,
+sum(quantity*price)
+FROM BIT_DB.JanSales
+GROUP BY product
+ORDER BY sum(quantity*price) desc
+LIMIT 1;
+
+---
+
 ## Key Skills Demonstrated
 
 -Cleaning messy transactional data
