@@ -1,0 +1,194 @@
+# Spotify Data Analysis with SQL
+
+This project explores Spotify track data using SQL to analyze artist performance, song characteristics, and music trends.
+
+Using a dataset downloaded from Kaggle, I created a SQL table, imported the data, and performed exploratory data analysis to answer business-style questions about popularity, track features, and listener trends.
+
+---
+
+## Objective
+
+The primary goals of this analysis were to:
+
+- Explore artist and track performance using popularity metrics
+- Analyze song characteristics such as danceability, energy, and tempo
+- Identify top-performing tracks and artists
+- Practice thinking like a data analyst by asking and answering questions using SQL
+- Strengthen SQL skills through real-world data exploration
+
+---
+
+## Business Questions
+
+- What is the average popularity, danceability, and energy by artist and track?
+- Who are the top 10 tracks based on popularity?
+- Which artists appear most frequently in top-performing tracks?
+- What is the longest song in the dataset?
+- What is the average danceability of the most popular songs?
+- Is there a relationship between energy and popularity?
+- What are the average song characteristics across the dataset?
+
+---
+
+## Dataset Overview
+
+This project uses a Spotify dataset downloaded from Kaggle and imported into SQL.
+
+The dataset includes:
+
+- artist_name
+- track_name
+- popularity
+- danceability
+- energy
+- loudness
+- tempo
+- duration_ms
+- and additional audio features
+
+---
+
+## Tools & Skills Used
+
+- SQL
+- CREATE TABLE
+- SELECT
+- AVG
+- MAX
+- GROUP BY
+- ORDER BY
+- LIMIT
+- Filtering & Aggregation
+
+- Exploratory Data Analysis
+- Analytical Thinking
+
+---
+
+## Database Schema
+
+```sql
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL
+);
+
+---
+
+## SQL Analysis
+
+1. Average Popularity, Danceability, and Energy by Artist and Track
+SELECT
+artist_name,
+track_name,
+AVG(popularity),
+AVG(danceability),
+AVG(energy)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name;
+
+2. Top 10 Tracks by Popularity
+SELECT track_name, artist_name, popularity
+FROM BIT_DB.spotifydata
+ORDER BY popularity DESC
+LIMIT 10;
+
+3. Most Frequent Artists in the Dataset
+SELECT artist_name, COUNT(*) AS track_count
+FROM BIT_DB.spotifydata
+GROUP BY artist_name
+ORDER BY track_count DESC;
+
+4. Longest Song in the Dataset
+SELECT track_name, artist_name, duration_ms
+FROM BIT_DB.spotifydata
+ORDER BY duration_ms DESC
+LIMIT 1;
+
+5. Average Danceability of Top 10 Most Popular Songs
+SELECT AVG(danceability)
+FROM (
+    SELECT danceability
+    FROM BIT_DB.spotifydata
+    ORDER BY popularity DESC
+    LIMIT 10
+) AS top_tracks;
+
+6. Average Song Characteristics Across Dataset
+SELECT 
+AVG(popularity),
+AVG(danceability),
+AVG(energy),
+AVG(tempo)
+FROM BIT_DB.spotifydata;
+
+7. Relationship Between Energy and Popularity
+SELECT energy, AVG(popularity)
+FROM BIT_DB.spotifydata
+GROUP BY energy
+ORDER BY energy DESC;
+
+---
+
+## Key Insights
+
+- Popular tracks tend to cluster within certain artists, indicating repeat success
+- High-energy songs often appear frequently among more popular tracks
+- Danceability varies across artists but remains a key characteristic of popular music
+- The longest tracks are not necessarily the most popular
+- Aggregated metrics help reveal overall trends in music production and listener preferences
+
+---
+
+## Key Skills Demonstrated
+
+- Writing structured SQL queries to answer analytical questions
+- Using aggregation functions such as AVG and COUNT
+- Grouping and summarizing large datasets
+- Ranking and filtering data for insights
+- Translating open-ended questions into SQL queries
+- Performing exploratory data analysis without predefined instructions
+
+---
+
+## What I Learned
+
+- How to explore a dataset without being given exact directions
+- How to identify meaningful questions from raw data
+- How to analyze patterns in music data using SQL
+- How to present SQL analysis clearly for a professional portfolio
+- How different audio features relate to song popularity
+
+---
+
+## Next Steps
+
+- To expand this project, I could:
+
+- Analyze trends by genre or release year
+- Explore correlations between features (danceability vs energy)
+- Identify top artists by average popularity
+- Build visualizations in Tableau or Power BI
+- Create a dashboard showing music trends
+
+---
+
+## Note
+
+This project uses a Spotify dataset from Kaggle for educational and portfolio purposes. It demonstrates SQL skills, exploratory analysis, and the ability to derive insights from real-world data.
