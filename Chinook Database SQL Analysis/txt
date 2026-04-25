@@ -1,1 +1,238 @@
+## Chinook Database SQL Analysis
 
+## Project Overview
+
+- This project analyzes a digital media store database to answer business-related questions using SQL.
+
+- The dataset includes information on customers, invoices, employees, tracks, and artists.
+
+## Objectives
+
+- Identify customer purchasing behavior
+- Analyze sales performance by employee
+- Explore relationships between customers, invoices, and products
+- Key Business Questions
+- Which customers are located outside the USA?
+- Which customers are located in Brazil?
+- What invoices are associated with Brazilian customers?
+- Which employees are Sales Support Agents?
+- What countries generate invoices?
+- Which sales agents are responsible for which invoices?
+- What are total sales by each sales agent?
+- How many invoices were generated in 2009?
+- What were total sales in 2009?
+- What tracks were purchased in each invoice?
+- What artists correspond to purchased tracks?
+- What are the track details including album, genre, and media type?
+- What are total sales per sales agent?
+- Which sales agent generated the most revenue in 2009?
+
+## SQL Techniques Used
+
+- SELECT and WHERE filtering
+- INNER JOIN and LEFT JOIN
+- Aggregations (SUM, COUNT, AVG)
+- GROUP BY
+- ORDER BY
+- DISTINCT
+- Date filtering
+- Aliasing
+
+## SQL Questions & Solutions
+
+- 1. Customers outside the USA
+
+Question:
+Show customers (full name, ID, country) who are not in the USA.
+
+SELECT 
+    FirstName, 
+    LastName, 
+    CustomerId, 
+    Country 
+FROM chinook.customers 
+WHERE Country != 'USA';
+
+Explanation:
+Filters customers where country is not equal to USA.
+
+- 2. Customers from Brazil
+SELECT * 
+FROM chinook.customers 
+WHERE Country = 'Brazil';
+
+Explanation:
+Returns all customers located in Brazil.
+
+- 3. Invoices from Brazilian customers
+SELECT 
+    cust.FirstName, 
+    cust.LastName, 
+    inv.InvoiceId, 
+    inv.BillingCountry, 
+    inv.InvoiceDate
+FROM chinook.invoices AS inv 
+LEFT JOIN chinook.customers AS cust 
+    ON inv.CustomerId = cust.CustomerId 
+WHERE inv.BillingCountry = 'Brazil';
+
+Explanation:
+Joins invoices with customers and filters for Brazil.
+
+- 4. Sales Support Agents
+SELECT * 
+FROM chinook.Employees
+WHERE Title = 'Sales Support Agent';
+
+Explanation:
+Filters employees by job title.
+
+- 5. Unique billing countries
+SELECT DISTINCT BillingCountry 
+FROM chinook.Invoices;
+
+Explanation:
+Returns unique countries where invoices exist.
+
+- 6. Invoices associated with each sales agent
+SELECT 
+    emp.LastName, 
+    emp.FirstName, 
+    inv.InvoiceId
+FROM chinook.Employees emp 
+JOIN chinook.Customers cust 
+    ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices inv 
+    ON inv.CustomerId = cust.CustomerId;
+
+Explanation:
+Links employees → customers → invoices.
+
+- 7. Invoice totals, customer, country, and sales agent
+SELECT 
+    emp.LastName, 
+    emp.FirstName, 
+    cust.FirstName, 
+    cust.LastName, 
+    cust.Country, 
+    inv.Total
+FROM chinook.Employees emp 
+JOIN chinook.Customers cust 
+    ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices inv 
+    ON inv.CustomerId = cust.CustomerId;
+
+Explanation:
+Combines sales agent, customer, and invoice data.
+
+- 8. Number of invoices in 2009
+SELECT COUNT(*)
+FROM chinook.Invoices
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+Explanation:
+Counts invoices within a date range.
+
+- 9. Total sales in 2009
+SELECT SUM(Total)
+FROM chinook.Invoices
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+Explanation:
+Calculates total revenue for 2009.
+
+- 10. Track name with each invoice line
+SELECT 
+    t.Name, 
+    i.InvoiceLineId
+FROM chinook.Invoice_items i
+JOIN chinook.Tracks t 
+    ON i.TrackId = t.TrackId;
+
+Explanation:
+Links invoice items to track names.
+
+- 11. Track name and artist name
+SELECT 
+    ar.Name AS Artist, 
+    t.Name AS Track, 
+    i.InvoiceLineId
+FROM chinook.Invoice_items i
+LEFT JOIN chinook.tracks t 
+    ON i.TrackID = t.TrackID
+INNER JOIN chinook.albums a
+    ON a.AlbumID = t.AlbumID
+LEFT JOIN chinook.artists ar
+    ON ar.ArtistID = a.ArtistID;
+
+Explanation:
+Connects invoice items → tracks → albums → artists.
+
+- 12. Track details (album, media type, genre)
+SELECT 
+    t.Name AS 'Track Name', 
+    a.Title AS 'Album Title', 
+    m.Name AS 'Media Type', 
+    g.Name AS 'Genre'
+FROM chinook.tracks t
+JOIN chinook.Albums a 
+    ON a.AlbumId = t.AlbumId
+JOIN chinook.Media_Types m
+    ON m.MediaTypeId = t.MediaTypeId
+JOIN chinook.Genres g
+    ON g.GenreId = t.GenreId;
+
+Explanation:
+Combines multiple tables for full track metadata.
+
+- 13. Total sales per sales agent
+SELECT 
+    emp.FirstName, 
+    emp.LastName,
+    ROUND(SUM(inv.Total), 2) AS TotalSales
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+    ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices inv 
+    ON inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent'
+GROUP BY emp.FirstName, emp.LastName;
+
+Explanation:
+Calculates total revenue per sales agent.
+
+- 14. Top sales agent in 2009
+SELECT 
+    emp.FirstName, 
+    emp.LastName,
+    ROUND(SUM(inv.Total), 2) AS TotalSales
+FROM chinook.Employees emp
+JOIN chinook.Customers cust 
+    ON cust.SupportRepId = emp.EmployeeId
+JOIN chinook.Invoices inv 
+    ON inv.CustomerId = cust.CustomerId
+WHERE emp.Title = 'Sales Support Agent'
+  AND inv.InvoiceDate LIKE '2009%'
+GROUP BY emp.FirstName, emp.LastName
+ORDER BY TotalSales DESC
+LIMIT 1;
+
+Explanation:
+Finds the highest-performing sales agent in 2009.
+
+## Skills Demonstrated
+
+- SQL querying and filtering
+- JOINs (INNER, LEFT)
+- Aggregations (SUM, COUNT, AVG)
+- GROUP BY and ORDER BY
+- Data relationships across multiple tables
+- Business-focused data analysis
+
+## Next Steps
+
+-- Additional custom questions can be added to further explore:
+
+- Customer lifetime value
+- Top-performing genres
+- Regional sales trends
